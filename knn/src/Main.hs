@@ -6,6 +6,11 @@ data Matrix = Matrix [Row] deriving Show
 matrixRowCount :: Matrix -> Int
 matrixRowCount (Matrix rs) = length rs
 
+tileMatrix :: Matrix -> (Int, Int) -> Matrix
+tileMatrix (Matrix rs) (rowCount, columnCount) =
+    let rows = map (\r -> concat $ replicate columnCount r) rs
+    in Matrix (concat $ replicate rowCount rows)
+
 group :: Matrix
 group = Matrix
   [ [1.0, 1.1]
@@ -18,12 +23,12 @@ labels :: [String]
 labels = ["A", "A", "B", "B"]
 
 main :: IO ()
-main = print $ classify0 [0, 0] group labels 3
+main = print $ classify0 (Matrix [[0.0, 0.0]]) group labels 3
 
 classify0 inX dataSet labels k =
     let dataSetSize = matrixRowCount dataSet
-        temp = tile inX (dataSetSize, 1)
-    in dataSetSize
+        temp = tileMatrix inX (dataSetSize, 2)
+    in temp
 
 {-
 def classify0(in_x, data_set, labels, k):
