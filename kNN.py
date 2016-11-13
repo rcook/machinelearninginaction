@@ -20,7 +20,6 @@ def classify0(in_x, data_set, labels, k):
   for i in range(k):
     label = labels[sorted_dist_indices[i]]
     class_count[label] = class_count.get(label, 0) + 1
-  print(class_count)
   sorted_class_count = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
   return sorted_class_count[0][0]
 
@@ -53,6 +52,8 @@ def main():
   """
   group, labels = create_data_set()
   r = classify0([0, 0], group, labels, 3)
+  print(r)
+  r = classify0([1, 1.2], group, labels, 3)
   print(r)
 
 if __name__ == "__main__":
