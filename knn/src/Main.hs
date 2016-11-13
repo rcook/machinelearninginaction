@@ -1,14 +1,11 @@
 module Main where
 
+import qualified Data.List as L
 import qualified Data.Vector as V
 import qualified Data.Vector.Storable as VS
 import           Numeric.LinearAlgebra
 
-constantVec :: Double -> Int -> Vector R
-constantVec value n = VS.replicate n value
-
-constantMat :: Double -> Int -> Int -> Matrix R
-constantMat value r c = matrix c (replicate (r * c) value)
+import           LAUtil
 
 group :: Matrix R
 group = matrix 2
@@ -21,16 +18,11 @@ group = matrix 2
 labels :: V.Vector String
 labels = V.fromList ["A", "A", "B", "B"]
 
-sumColumns :: Matrix R -> Matrix R
-sumColumns m = constantMat 1.0 1 (rows m) <> m
-
-sumRows :: Matrix R -> Matrix R
-sumRows m = constantMat 1.0 1 (cols m) <> tr m
-
 main :: IO ()
 main = do
     let r = classify0 (matrix 2 [0.0, 0.0]) group labels 3
     print r
+    print $ head (toRows r)
 
 classify0 :: Matrix R -> Matrix R -> V.Vector String -> Int -> Matrix R
 classify0 inX dataSet labels k =
@@ -39,6 +31,7 @@ classify0 inX dataSet labels k =
         sqDiffMat = diffMat ** 2
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
+        v = unsafeToVector distances
     in distances
 
 {-
