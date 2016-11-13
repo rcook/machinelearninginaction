@@ -14,8 +14,8 @@ def classify0(in_x, data_set, labels, k):
   diff_mat = tile(in_x, (data_set_size, 1)) - data_set
   sq_diff_mat = diff_mat ** 2
   sq_distances = sq_diff_mat.sum(axis=1)
-  print(sq_distances)
   distances = sq_distances ** 0.5
+  print(distances)
   sorted_dist_indices = distances.argsort()
   class_count = {}
   for i in range(k):

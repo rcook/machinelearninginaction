@@ -38,7 +38,8 @@ classify0 inX dataSet labels k =
         diffMat = repmat inX dataSetSize 1 - dataSet
         sqDiffMat = diffMat ** 2
         sqDistances = sumRows sqDiffMat
-    in sqDistances
+        distances = sqDistances ** 0.5
+    in distances
 
 {-
 def classify0(in_x, data_set, labels, k):
