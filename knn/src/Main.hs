@@ -1,34 +1,44 @@
 module Main where
 
-type Row = [Double]
-data Matrix = Matrix [Row] deriving Show
+import qualified Data.Vector as V
+import qualified Data.Vector.Storable as VS
+import           Numeric.LinearAlgebra
 
-matrixRowCount :: Matrix -> Int
-matrixRowCount (Matrix rs) = length rs
+constantVec :: Double -> Int -> Vector R
+constantVec value n = VS.replicate n value
 
-tileMatrix :: Matrix -> (Int, Int) -> Matrix
-tileMatrix (Matrix rs) (rowCount, columnCount) =
-    let rows = map (\r -> concat $ replicate columnCount r) rs
-    in Matrix (concat $ replicate rowCount rows)
+constantMat :: Double -> Int -> Int -> Matrix R
+constantMat value r c = matrix c (replicate (r * c) value)
 
-group :: Matrix
-group = Matrix
-  [ [1.0, 1.1]
-  , [1.0, 1.0]
-  , [0.0, 0.0]
-  , [0.0, 0.1]
+group :: Matrix R
+group = matrix 2
+  [ 1.0, 1.1
+  , 1.0, 1.0
+  , 0.0, 0.0
+  , 0.0, 0.1
   ]
 
-labels :: [String]
-labels = ["A", "A", "B", "B"]
+labels :: V.Vector String
+labels = V.fromList ["A", "A", "B", "B"]
+
+sumColumns :: Matrix R -> Matrix R
+sumColumns m = constantMat 1.0 1 (rows m) <> m
+
+sumRows :: Matrix R -> Matrix R
+sumRows m = constantMat 1.0 1 (cols m) <> tr m
 
 main :: IO ()
-main = print $ classify0 (Matrix [[0.0, 0.0]]) group labels 3
+main = do
+    let r = classify0 (matrix 2 [0.0, 0.0]) group labels 3
+    print r
 
+classify0 :: Matrix R -> Matrix R -> V.Vector String -> Int -> Matrix R
 classify0 inX dataSet labels k =
-    let dataSetSize = matrixRowCount dataSet
-        temp = tileMatrix inX (dataSetSize, 2)
-    in temp
+    let dataSetSize = rows dataSet
+        diffMat = repmat inX dataSetSize 1 - dataSet
+        sqDiffMat = diffMat ** 2
+        sqDistances = sumRows sqDiffMat
+    in sqDistances
 
 {-
 def classify0(in_x, data_set, labels, k):
