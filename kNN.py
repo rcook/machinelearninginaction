@@ -15,12 +15,12 @@ def classify0(in_x, data_set, labels, k):
   sq_diff_mat = diff_mat ** 2
   sq_distances = sq_diff_mat.sum(axis=1)
   distances = sq_distances ** 0.5
-  print(distances)
   sorted_dist_indices = distances.argsort()
   class_count = {}
   for i in range(k):
     label = labels[sorted_dist_indices[i]]
     class_count[label] = class_count.get(label, 0) + 1
+  print(class_count)
   sorted_class_count = sorted(class_count.iteritems(), key=operator.itemgetter(1), reverse=True)
   return sorted_class_count[0][0]
 

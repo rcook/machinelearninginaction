@@ -1,8 +1,10 @@
 module Main where
 
 import qualified Data.List as L
+import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Storable as VS
+import           Debug.Trace
 import           Numeric.LinearAlgebra
 
 import           LAUtil
@@ -22,17 +24,20 @@ main :: IO ()
 main = do
     let r = classify0 (matrix 2 [0.0, 0.0]) group labels 3
     print r
-    print $ head (toRows r)
 
-classify0 :: Matrix R -> Matrix R -> V.Vector String -> Int -> Matrix R
+classify0 :: Matrix R -> Matrix R -> V.Vector String -> Int -> M.Map String Z
 classify0 inX dataSet labels k =
     let dataSetSize = rows dataSet
         diffMat = repmat inX dataSetSize 1 - dataSet
         sqDiffMat = diffMat ** 2
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
-        v = unsafeToVector distances
-    in distances
+        sortedDistIndices :: Vector Z
+        sortedDistIndices = argSort (unsafeToVector distances)
+    in VS.foldr
+        (\a b -> b)
+        M.empty
+        (VS.take k sortedDistIndices)
 
 {-
 def classify0(in_x, data_set, labels, k):
