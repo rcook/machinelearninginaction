@@ -1,5 +1,7 @@
 module LAUtil.Charting
-  ( EP.Plot
+  ( EP.Graph2D (..)
+  , EP.Option (..)
+  , EP.Plot
   , plot
   ) where
 

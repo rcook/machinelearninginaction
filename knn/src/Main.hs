@@ -30,6 +30,7 @@ main = do
     let r = classify0 (matrix 2 [1.0, 1.2]) group labels 3
     print r
     plot (sin . cos)
+    plot $ Data2D [Title "Sample Data"] [] [(1, 2), (2, 4), (3, 6), (4, 8), (5, 10)]
 
 classify0 :: Matrix R -> Matrix R -> V.Vector String -> Int -> String
 classify0 inX dataSet labels k =
