@@ -17,10 +17,12 @@ library
   default-language:     Haskell2010
   exposed-modules:      LAUtil
                       , LAUtil.Arithmetic
+                      , LAUtil.Charting
                       , LAUtil.Convert
                       , LAUtil.Data
                       , LAUtil.Sorting
   build-depends:        base
+                      , easyplot
                       , hmatrix
                       , vector
 
