@@ -1,4 +1,4 @@
-module Main where
+module Main (main) where
 
 import qualified Data.List as L
 import qualified Data.Map as M
@@ -6,7 +6,8 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Storable as VS
 import           Numeric.LinearAlgebra
 
-import           LAUtil
+import           LAUtil hiding (plot)
+import qualified LAUtil
 
 group :: Matrix R
 group = matrix 2
@@ -18,6 +19,9 @@ group = matrix 2
 
 labels :: V.Vector String
 labels = V.fromList ["A", "A", "B", "B"]
+
+plot :: LAUtil.Plot a => a -> IO ()
+plot = LAUtil.plot "temp"
 
 main :: IO ()
 main = do

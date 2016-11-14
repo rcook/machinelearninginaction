@@ -22,8 +22,11 @@ library
                       , LAUtil.Data
                       , LAUtil.Sorting
   build-depends:        base
+                      , directory
                       , easyplot
                       , hmatrix
+                      , process
+                      , temporary
                       , vector
 
 executable knn-app
