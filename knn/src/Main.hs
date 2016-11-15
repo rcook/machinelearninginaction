@@ -5,6 +5,7 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Storable as VS
 import           Numeric.LinearAlgebra
+import           Numeric.LinearAlgebra.Devel
 
 import           LAUtil hiding (plot)
 import qualified LAUtil
@@ -40,7 +41,7 @@ classify0 inX dataSet labels k =
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
         sortedDistIndices :: Vector Z
-        sortedDistIndices = argSort (unsafeToVector distances)
+        sortedDistIndices = argSort (unsafeMatrixToVector distances)
         classCounts = VS.foldr
             (\i m ->
                 let label = (V.!) labels (fromIntegral i)
