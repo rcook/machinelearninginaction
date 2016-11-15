@@ -1,7 +1,6 @@
-resolver: lts-7.8
+resolver: lts-7.9
 packages:
 - .
-- ../lautil
 extra-deps:
 - easyplot-1.0
 flags: {}
