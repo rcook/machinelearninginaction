@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module LAUtil.Charting
   ( EP.Graph2D (..)
   , EP.Option (..)
@@ -20,4 +22,6 @@ plot dir p = withCurrentDirectory dir $ do
     (tempPath, _) <- openTempFile "." "plot.png"
     status <- EP.plot (EP.PNG tempPath) p
     unless status (throwIO $ ChartingException "Graphics.EasyPlot.plot failed")
+#ifdef OS_OSX
     callCommand $ "open " ++ tempPath
+#endif
