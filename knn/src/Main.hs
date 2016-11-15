@@ -41,7 +41,7 @@ classify0 inX dataSet labels k =
         sqDiffMat = diffMat ** 2
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
-        sortedDistIndices :: VU.Vector Int
+        sortedDistIndices :: IndexVector
         sortedDistIndices = argSort (unsafeMatrixToVector distances)
         classCounts = VU.foldr
             (\i m ->

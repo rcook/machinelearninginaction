@@ -1,11 +1,11 @@
 module LAUtil.Sorting
-  ( argSort
+  ( IndexVector
+  , argSort
   )
   where
 
 import           Control.Monad
 import           Control.Monad.ST
-import qualified Data.List as L
 import           Data.Ord
 import qualified Data.Vector.Algorithms.Intro as VAI
 import qualified Data.Vector.Storable as VS
@@ -19,7 +19,9 @@ argSort :: Vector R -> Vector Z
 argSort xs = VS.fromList (L.map snd $ L.sortBy (\(x0, _) (x1, _) -> compare x0 x1) (L.zip (VS.toList xs) [0..]))
 -}
 
-argSort :: Vector R -> VU.Vector Int
+type IndexVector = VU.Vector Int
+
+argSort :: Vector R -> IndexVector
 argSort xs = runST $ do
     let l = VS.length xs
     t0 <- VUM.new l
