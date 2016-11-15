@@ -28,6 +28,7 @@ library
                       , process
                       , temporary
                       , vector
+                      , vector-algorithms
 
 executable knn-app
   hs-source-dirs:       src

@@ -3,6 +3,7 @@ module Main (main) where
 import qualified Data.List as L
 import qualified Data.Map as M
 import qualified Data.Vector as V
+import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           Numeric.LinearAlgebra
 import           Numeric.LinearAlgebra.Devel
@@ -40,13 +41,13 @@ classify0 inX dataSet labels k =
         sqDiffMat = diffMat ** 2
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
-        sortedDistIndices :: Vector Z
+        sortedDistIndices :: VU.Vector Int
         sortedDistIndices = argSort (unsafeMatrixToVector distances)
-        classCounts = VS.foldr
+        classCounts = VU.foldr
             (\i m ->
                 let label = (V.!) labels (fromIntegral i)
                 in M.alter (\mb -> case mb of Just n -> Just (n + 1); Nothing -> Just 1) label m)
             M.empty
-            (VS.take k sortedDistIndices)
+            (VU.take k sortedDistIndices)
         sortedClassCounts = L.sortBy (\(_, n0) (_, n1) -> compare n1 n0) (M.toList classCounts)
     in (fst . head) sortedClassCounts
