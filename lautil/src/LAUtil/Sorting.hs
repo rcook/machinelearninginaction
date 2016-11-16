@@ -31,4 +31,4 @@ argSort xs = runST $ do
     t1 <- VUM.new l
     forM_ [0..l - 1] $
         \i -> VUM.unsafeRead t0 i >>= \(x, _) -> VUM.unsafeWrite t1 i x
-    VU.freeze t1
+    VU.unsafeFreeze t1
