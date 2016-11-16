@@ -25,8 +25,16 @@ labels = V.fromList ["A", "A", "B", "B"]
 plot :: LAUtil.Plot a => a -> IO ()
 plot = LAUtil.plot "temp"
 
+dataPath :: FilePath
+dataPath = "../Ch02/datingTestSet.txt"
+
 main :: IO ()
 main = do
+    labelledMatrix <- readLabelledMatrix dataPath
+    print labelledMatrix
+
+mainX :: IO ()
+mainX = do
     let r = classify0 (matrix 2 [0.0, 0.0]) group labels 3
     print r
     let r = classify0 (matrix 2 [1.0, 1.2]) group labels 3

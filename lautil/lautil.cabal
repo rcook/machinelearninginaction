@@ -26,12 +26,15 @@ library
                             , LAUtil.Charting
                             , LAUtil.Convert
                             , LAUtil.Data
+                            , LAUtil.LabelledMatrix
                             , LAUtil.Sorting
   build-depends:              base
+                            , containers
                             , directory
                             , easyplot
                             , hmatrix
                             , process
+                            , split
                             , temporary
                             , vector
                             , vector-algorithms
