@@ -56,15 +56,14 @@ renderChapter2Figures = do
 
 testNormalizeMatrixColumns :: IO ()
 testNormalizeMatrixColumns = do
-    let m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 120.0]
-    print m
-    print $ normalizeMatrixColumns m
+    m <- readLabelledMatrix dataPath
+    let m' = m { _values = normalizeMatrixColumns $ _values m }
+    renderSVG "Normalized: video games vs. frequent flyer miles" "figure-2.5-normalized.svg" (plots m' 0 1)
 
 main :: IO ()
 main = do
-    --demoClassify0
-    --renderChapter2Figures
-
+    demoClassify0
+    renderChapter2Figures
     testNormalizeMatrixColumns
 
     --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
