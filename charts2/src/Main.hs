@@ -48,5 +48,5 @@ plots = map (uncurry points) . plotSpecs
 
 main :: IO ()
 main = toFile def "example.svg" $ do
-    layout_title .= "Amplitude Modulation"
+    layout_title .= "Categories"
     mapM_ plot (plots input)
