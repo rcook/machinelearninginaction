@@ -1,26 +1,26 @@
-name:                knn
-version:             0.1.0.0
-synopsis:            k-Nearest-Neighbours Algorithm
-description:         Please see README.md
-homepage:            https://github.com/rcook/knn#readme
-license:             MIT
-license-file:        LICENSE
-author:              Richard Cook
-maintainer:          rcook@rcook.org
-copyright:           2016 Richard Cook
-category:            Web
-build-type:          Simple
-cabal-version:       >=1.10
+name:                         knn
+version:                      0.1.0.0
+synopsis:                     k-Nearest-Neighbours Algorithm
+description:                  Please see README.md
+homepage:                     https://github.com/rcook/knn#readme
+license:                      MIT
+license-file:                 LICENSE
+author:                       Richard Cook
+maintainer:                   rcook@rcook.org
+copyright:                    2016 Richard Cook
+category:                     Web
+build-type:                   Simple
+cabal-version:                >=1.10
 
 executable knn-app
-  hs-source-dirs:       src
-  main-is:              Main.hs
-  default-language:     Haskell2010
-  other-modules:        Charting
-  build-depends:        Chart
-                      , Chart-diagrams
-                      , base >= 4.7 && < 5
-                      , containers
-                      , hmatrix
-                      , lautil
-                      , vector
+  hs-source-dirs:             src
+  main-is:                    Main.hs
+  default-language:           Haskell2010
+  other-modules:              Charting
+  build-depends:              Chart
+                            , Chart-diagrams
+                            , base >= 4.7 && < 5
+                            , containers
+                            , hmatrix
+                            , lautil
+                            , vector
