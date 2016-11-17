@@ -9,7 +9,6 @@ import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           LAUtil
 import           Numeric.LinearAlgebra
-import           Numeric.LinearAlgebra.Devel
 
 group :: Matrix R
 group = matrix 2
@@ -71,7 +70,7 @@ classify0 inX dataSet labelIds k =
         sqDistances = sumRows sqDiffMat
         distances = sqDistances ** 0.5
         sortedDistIndices :: IndexVector
-        sortedDistIndices = argSort (unsafeMatrixToVector distances)
+        sortedDistIndices = argSort (flatten distances)
         classCounts = VU.foldr
             (\i m ->
                 let labelId = (VU.!) labelIds (fromIntegral i)
