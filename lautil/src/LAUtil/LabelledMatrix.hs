@@ -1,5 +1,6 @@
 module LAUtil.LabelledMatrix
-  ( LabelledMatrix
+  ( LabelId
+  , LabelledMatrix (..)
   , readLabelledMatrix
   ) where
 
@@ -18,10 +19,12 @@ import           Numeric.LinearAlgebra.Devel
 data CustomException = CustomException String deriving Show
 instance Exception CustomException
 
+type LabelId = Int
+
 data LabelledMatrix = LabelledMatrix
   { _values :: Matrix R
-  , _labelIds :: VU.Vector Int
-  , _labels :: M.Map String Int
+  , _labelIds :: VU.Vector LabelId
+  , _labels :: M.Map String LabelId
   } deriving Show
 
 splitLine :: String -> [String]
