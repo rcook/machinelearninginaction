@@ -21,11 +21,11 @@ partitionIndices :: Ord a => [a] -> M.Map a [Int]
 partitionIndices xs = foldr f M.empty (zip [0..] xs)
     where f (i, x) m = M.alter (\mb -> case mb of Nothing -> Just [i]; Just is -> Just (i : is)) x m
 
-plotSpecs :: LabelledMatrix -> [PlotSpec]
-plotSpecs LabelledMatrix{..} =
+plotSpecs :: LabelledMatrix -> Int -> Int -> [PlotSpec]
+plotSpecs LabelledMatrix{..} xColumnIndex yColumnIndex =
     let columns = toColumns _values
-        column0 = columns !! 0
-        column1 = columns !! 1
+        column0 = columns !! xColumnIndex
+        column1 = columns !! yColumnIndex
         labelIds = VU.toList _labelIds
         partitions = M.toList $ partitionIndices labelIds
     in (flip map) partitions $ \(labelId, indices) ->
@@ -34,5 +34,5 @@ plotSpecs LabelledMatrix{..} =
             Just labelText = M.lookup labelId _labelMap
         in (labelText, subseries)
 
-plots :: LabelledMatrix -> [RRPlot]
-plots = map (uncurry points) . plotSpecs
+plots :: LabelledMatrix -> Int -> Int -> [RRPlot]
+plots m xColumnIndex yColumnIndex = map (uncurry points) (plotSpecs m xColumnIndex yColumnIndex)
