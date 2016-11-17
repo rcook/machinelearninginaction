@@ -7,12 +7,9 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
-import           LAUtil hiding (plot)
-import qualified LAUtil
+import           LAUtil
 import           Numeric.LinearAlgebra
 import           Numeric.LinearAlgebra.Devel
-
-import           Charting
 
 group :: Matrix R
 group = matrix 2
@@ -27,9 +24,6 @@ labels = M.fromList [(1, "A"), (2, "B")]
 
 labelIds :: VU.Vector LabelId
 labelIds = VU.fromList [1, 1, 2, 2]
-
-plot :: LAUtil.Plot a => a -> IO ()
-plot = LAUtil.plot "temp"
 
 dataPath :: FilePath
 dataPath = "../Ch02/datingTestSet.txt"
@@ -54,7 +48,7 @@ input = LabelledMatrix
 renderFigure_2_3 :: IO ()
 renderFigure_2_3 = do
     m <- readLabelledMatrix dataPath
-    plot' (plots m)
+    plot (plots m)
 
 main :: IO ()
 main = do

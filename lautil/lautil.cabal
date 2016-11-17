@@ -30,10 +30,10 @@ library
                             , LAUtil.ScatterPlot
                             , LAUtil.Sorting
   build-depends:              Chart
+                            , Chart-diagrams
                             , base
                             , containers
                             , directory
-                            , easyplot
                             , hmatrix
                             , process
                             , split

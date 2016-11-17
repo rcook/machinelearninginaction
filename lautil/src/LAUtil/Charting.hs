@@ -1,29 +1,11 @@
-{-# LANGUAGE CPP #-}
+module LAUtil.Charting (plot) where
 
-module LAUtil.Charting
-  ( EP.Color (..)
-  , EP.Graph2D (..)
-  , EP.Option (..)
-  , EP.Plot
-  , EP.Style (..)
-  , plot
-  ) where
+import           Graphics.Rendering.Chart.Backend.Diagrams
+import           Graphics.Rendering.Chart.Easy hiding (plot)
+import qualified Graphics.Rendering.Chart.Easy as CE
+import           LAUtil.ScatterPlot
 
-import           Control.Exception
-import           Control.Monad
-import qualified Graphics.EasyPlot as EP
-import           System.Directory
-import           System.IO.Temp
-import           System.Process
-
-data ChartingException = ChartingException String deriving Show
-instance Exception ChartingException
-
-plot :: EP.Plot a => FilePath -> a -> IO ()
-plot dir p = withCurrentDirectory dir $ do
-    (tempPath, _) <- openTempFile "." "plot.png"
-    status <- EP.plot (EP.PNG tempPath) p
-    unless status (throwIO $ ChartingException "Graphics.EasyPlot.plot failed")
-#ifdef OS_OSX
-    callCommand $ "open " ++ tempPath
-#endif
+--plot :: [RRPlot l] -> IO ()
+plot ps = toFile def "example.svg" $ do
+    layout_title .= "Categories"
+    mapM_ CE.plot ps
