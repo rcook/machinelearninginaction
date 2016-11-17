@@ -9,12 +9,12 @@ import           Numeric.LinearAlgebra
 
 series :: Matrix R
 series = matrix 2
-  [ 1.0, 1.0
-  , 2.0, 2.0
-  , 3.0, 3.0
-  , 4.0, 4.0
-  , 5.0, 5.0
-  , 6.0, 6.0
+  [ 1.0, 1.1
+  , 2.0, 2.1
+  , 3.0, 3.1
+  , 4.0, 4.1
+  , 5.0, 5.1
+  , 6.0, 6.1
   ]
 
 seriesLabelIds :: Vector Z
@@ -34,8 +34,10 @@ main = do
         column1 = columns !! 1
         labelIds = VS.toList seriesLabelIds
         ps = partitionIndices labelIds
-    print labelIds
-    print ps
+    forM_ (M.toList ps) $ \(labelId, indices) -> do
+        let subseries = foldr f [] indices
+                          where f i ps = let p = ((VS.!) column0 i, (VS.!) column1 i) in p : ps
+        print subseries
 
 v :: [(R, R)]
 v = [(1.0, 1.0), (10.0, 10.0)]
