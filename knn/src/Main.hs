@@ -54,10 +54,34 @@ renderChapter2Figures = do
     -- Figure 2.5
     renderSVG "Video games vs. frequent flyer miles" "figure-2.5.svg" (plots m 0 1)
 
+unsafeColumnHead :: Matrix R -> Int -> R
+unsafeColumnHead m columnIndex = m `atIndex` (0, columnIndex)
+
+foldColumn :: (R -> b -> b) -> b -> Matrix R -> Int -> b
+foldColumn f acc m columnIndex = foldr
+    (\r acc' -> f (m `atIndex` (r, columnIndex)) acc')
+    acc
+    [0..rows m - 1]
+
+traverseColumns :: IO ()
+traverseColumns = do
+    let m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
+    print m
+
+    let columnIndex = 1
+    let initialMinMax = unsafeColumnHead m columnIndex
+    print $ foldColumn
+        (\x (xMin, xMax) -> (min x xMin, max x xMax))
+        (initialMinMax, initialMinMax)
+        m
+        columnIndex
+
 main :: IO ()
 main = do
-    demoClassify0
-    renderChapter2Figures
+    --demoClassify0
+    --renderChapter2Figures
+
+    traverseColumns
 
     --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
     --print r
