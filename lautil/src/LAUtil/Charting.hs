@@ -1,9 +1,11 @@
 {-# LANGUAGE CPP #-}
 
 module LAUtil.Charting
-  ( EP.Graph2D (..)
+  ( EP.Color (..)
+  , EP.Graph2D (..)
   , EP.Option (..)
   , EP.Plot
+  , EP.Style (..)
   , plot
   ) where
 

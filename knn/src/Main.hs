@@ -50,7 +50,10 @@ renderFigure_2_3 = do
         col1 = columns !! 1
         col2 = columns !! 2
         points = zip (VS.toList col1) (VS.toList col2)
-    plot $ Data2D [Title "Sample Data"] [] points
+    plot $ Data2D
+        [Title "Figure 2.3", Style Points, Color Blue]
+        []
+        points
 
 main :: IO ()
 main = do
