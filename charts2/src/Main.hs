@@ -5,7 +5,7 @@ module Main (main) where
 import           Control.Monad
 import qualified Data.Map as M
 import           Data.Vector.Storable as VS hiding (foldr, forM_, map, mapM_)
-import           Graphics.Rendering.Chart.Backend.Diagrams
+import qualified Graphics.Rendering.Chart.Backend.Diagrams as D
 import           Graphics.Rendering.Chart.Easy hiding (Matrix, Vector)
 import           Numeric.LinearAlgebra
 
@@ -47,6 +47,6 @@ plots :: Input -> [RRPlot l]
 plots = map (uncurry points) . plotSpecs
 
 main :: IO ()
-main = toFile def "example.svg" $ do
+main = D.toFile def "example.svg" $ do
     layout_title .= "Categories"
     mapM_ plot (plots input)
