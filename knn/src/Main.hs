@@ -54,22 +54,6 @@ renderChapter2Figures = do
     -- Figure 2.5
     renderSVG "Video games vs. frequent flyer miles" "figure-2.5.svg" (plots m 0 1)
 
-columnHead :: Matrix R -> Int -> R
-columnHead m c = m `atIndex` (0, c)
-
-foldColumn :: (R -> b -> b) -> b -> Matrix R -> Int -> b
-foldColumn f acc m c = foldr (\r acc' -> f (m `atIndex` (r, c)) acc') acc [0..rows m - 1]
-
-normalizeColumn :: Matrix R -> Int -> Vector R
-normalizeColumn m c =
-    let initialMinMax = columnHead m c
-        (xMin, xMax) = foldColumn (\x (xMin, xMax) -> (min x xMin, max x xMax)) (initialMinMax, initialMinMax) m c
-        range = xMax - xMin
-    in VS.generate (rows m) (\r -> (m `atIndex` (r, c) - xMin) / range)
-
-normalizeMatrixColumns :: Matrix R -> Matrix R
-normalizeMatrixColumns m = fromColumns $ map (normalizeColumn m) [0..cols m - 1]
-
 testNormalizeMatrixColumns :: IO ()
 testNormalizeMatrixColumns = do
     let m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 120.0]
