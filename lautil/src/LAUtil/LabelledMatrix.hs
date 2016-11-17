@@ -24,8 +24,8 @@ type LabelId = Int
 data LabelledMatrix = LabelledMatrix
   { _values :: Matrix R
   , _labelIds :: VU.Vector LabelId
-  , _labels :: M.Map String LabelId
-  , _xLabels :: M.Map LabelId String
+  , _labelIdMap :: M.Map String LabelId
+  , _labelMap :: M.Map LabelId String
   } deriving Show
 
 splitLine :: String -> [String]

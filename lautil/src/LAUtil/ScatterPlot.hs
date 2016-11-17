@@ -1,8 +1,7 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module LAUtil.ScatterPlot
-  ( Input (..)
-  , RRPlot
+  ( RRPlot
   , plots
   ) where
 
@@ -18,28 +17,22 @@ type Coordinate = (R, R)
 type CoordinateList = [Coordinate]
 type PlotSpec = (String, CoordinateList)
 
-data Input = Input
-  { _xvalues :: Matrix R
-  , _xlabelIds :: VU.Vector LabelId
-  , _xlabels :: M.Map LabelId String
-  } deriving Show
-
 partitionIndices :: Ord a => [a] -> M.Map a [Int]
 partitionIndices xs = foldr f M.empty (zip [0..] xs)
     where f (i, x) m = M.alter (\mb -> case mb of Nothing -> Just [i]; Just is -> Just (i : is)) x m
 
-plotSpecs :: Input -> [PlotSpec]
-plotSpecs Input{..} =
-    let columns = toColumns _xvalues
+plotSpecs :: LabelledMatrix -> [PlotSpec]
+plotSpecs LabelledMatrix{..} =
+    let columns = toColumns _values
         column0 = columns !! 0
         column1 = columns !! 1
-        labelIds = VU.toList _xlabelIds
+        labelIds = VU.toList _labelIds
         partitions = M.toList $ partitionIndices labelIds
     in (flip map) partitions $ \(labelId, indices) ->
         let subseries = foldr f [] indices
                           where f i cs = let c = ((VS.!) column0 i, (VS.!) column1 i) in c : cs
-            Just labelText = M.lookup labelId _xlabels
+            Just labelText = M.lookup labelId _labelMap
         in (labelText, subseries)
 
-plots :: Input -> [RRPlot l]
+plots :: LabelledMatrix -> [RRPlot l]
 plots = map (uncurry points) . plotSpecs
