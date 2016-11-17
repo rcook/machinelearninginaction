@@ -1,3 +1,5 @@
+{-# LANGUAGE RecordWildCards #-}
+
 module LAUtil.Normalization
   ( ColumnNormalization (..)
   , MatrixNormalization (..)
@@ -35,5 +37,8 @@ normalizeColumn m c =
 -- normalizeMatrixColumns is our equivalent to kNN.autoNorm
 normalizeMatrixColumns :: Matrix R -> MatrixNormalization
 normalizeMatrixColumns m =
-    let (columns, ranges, mins) = foldr (\c (columns, ranges, mins) -> (columns, ranges, mins)) ([], [], []) [0..cols m - 1]
+    let (columns, ranges, mins) = foldr
+            (\c (columns, ranges, mins) -> let ColumnNormalization{..} = normalizeColumn m c in (cnValues : columns, cnRange : ranges, cnMin : mins))
+            ([], [], [])
+            [0..cols m - 1]
     in MatrixNormalization (fromColumns columns) ranges mins
