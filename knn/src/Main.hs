@@ -68,13 +68,14 @@ traverseColumns = do
     let m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0]
     print m
 
-    let columnIndex = 1
-    let initialMinMax = unsafeColumnHead m columnIndex
-    print $ foldColumn
-        (\x (xMin, xMax) -> (min x xMin, max x xMax))
-        (initialMinMax, initialMinMax)
-        m
-        columnIndex
+    print $ map
+        (\c ->
+            let initialMinMax = unsafeColumnHead m c
+            in foldColumn (\x (xMin, xMax) -> (min x xMin, max x xMax))
+                (initialMinMax, initialMinMax)
+                m
+                c)
+        [0..cols m - 1]
 
 main :: IO ()
 main = do
