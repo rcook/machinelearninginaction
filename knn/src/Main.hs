@@ -57,7 +57,7 @@ renderChapter2Figures = do
 testNormalizeMatrixColumns :: IO ()
 testNormalizeMatrixColumns = do
     m <- readLabelledMatrix dataPath
-    let m' = m { _values = normalizeMatrixColumns $ _values m }
+    let m' = m { _values = mnValues $ normalizeMatrixColumns (_values m) }
     renderSVG "Normalized: video games vs. frequent flyer miles" "figure-2.5-normalized.svg" (plots m' 0 1)
 
 main :: IO ()
