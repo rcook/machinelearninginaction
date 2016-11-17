@@ -36,10 +36,10 @@ plotSpecs Input{..} =
         column0 = columns !! 0
         column1 = columns !! 1
         labelIds = VS.toList _labelIds
-        ps = partitionIndices labelIds
-    in (flip map) (M.toList ps) $ \(labelId, indices) ->
+        partitions = M.toList $ partitionIndices labelIds
+    in (flip map) partitions $ \(labelId, indices) ->
         let subseries = foldr f [] indices
-                          where f i ps = let p = ((VS.!) column0 i, (VS.!) column1 i) in p : ps
+                          where f i cs = let c = ((VS.!) column0 i, (VS.!) column1 i) in c : cs
             Just labelText = M.lookup labelId _labels
         in (labelText, subseries)
 
