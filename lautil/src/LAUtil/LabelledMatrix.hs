@@ -25,6 +25,7 @@ data LabelledMatrix = LabelledMatrix
   { _values :: Matrix R
   , _labelIds :: VU.Vector LabelId
   , _labels :: M.Map String LabelId
+  , _xLabels :: M.Map LabelId String
   } deriving Show
 
 splitLine :: String -> [String]
@@ -32,6 +33,12 @@ splitLine = splitOneOf [' ', '\t']
 
 forFoldM :: (Foldable t, Monad m) => b -> t a -> (b -> a -> m b) -> m b
 forFoldM = flip . flip foldM
+
+swapPair :: (a, b) -> (b, a)
+swapPair (a, b) = (b, a)
+
+swapMap :: (Ord k, Ord v) => M.Map k v -> M.Map v k
+swapMap = M.fromList . map swapPair . M.toList
 
 readLabelledMatrix :: FilePath -> IO LabelledMatrix
 readLabelledMatrix path = do
@@ -69,5 +76,4 @@ readLabelledMatrix path = do
 
         values = matrixFromVector RowMajor rowCount columnCount valuesV
 
-    return $ LabelledMatrix values labelIds labels
-
+    return $ LabelledMatrix values labelIds labels (swapMap labels)
