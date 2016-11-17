@@ -70,8 +70,8 @@ normalizeColumn m c =
 normalizeMatrixColumns :: Matrix R -> Matrix R
 normalizeMatrixColumns m = fromColumns $ map (normalizeColumn m) [0..cols m - 1]
 
-traverseColumns :: IO ()
-traverseColumns = do
+testNormalizeMatrixColumns :: IO ()
+testNormalizeMatrixColumns = do
     let m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 120.0]
     print m
     print $ normalizeMatrixColumns m
@@ -81,7 +81,7 @@ main = do
     --demoClassify0
     --renderChapter2Figures
 
-    traverseColumns
+    testNormalizeMatrixColumns
 
     --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
     --print r
