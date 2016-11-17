@@ -12,7 +12,7 @@ import           Numeric.LinearAlgebra
 type RRPlot l = EC l (PlotPoints R R)
 type Coordinate = (R, R)
 type CoordinateList = [Coordinate]
-type SeriesPlotSpec = (String, CoordinateList)
+type PlotSpec = (String, CoordinateList)
 
 data Input = Input
   { _values :: Matrix R
@@ -30,7 +30,7 @@ partitionIndices :: [Z] -> M.Map Z [Int]
 partitionIndices xs = foldr f M.empty (zip [0..] xs)
     where f (i, x) m = M.alter (\mb -> case mb of Nothing -> Just [i]; Just is -> Just (i : is)) x m
 
-plotSpecs :: Input -> [SeriesPlotSpec]
+plotSpecs :: Input -> [PlotSpec]
 plotSpecs Input{..} =
     let columns = toColumns _values
         column0 = columns !! 0
