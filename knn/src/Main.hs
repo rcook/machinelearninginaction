@@ -33,21 +33,32 @@ plot = LAUtil.plot "temp"
 dataPath :: FilePath
 dataPath = "../Ch02/datingTestSet.txt"
 
+demoClassify0 :: IO ()
+demoClassify0 = do
+    let r = classify0 (row [0.0, 0.0]) group labelIds 3
+        Just label = M.lookup r labels
+    print label
+
+    let r = classify0 (row [1.0, 1.2]) group labelIds 3
+        Just label = M.lookup r labels
+    print label
+
+renderFigure_2_3 :: IO ()
+renderFigure_2_3 = do
+    LabelledMatrix{..} <- readLabelledMatrix dataPath
+    let columns = toColumns _values
+        col1 = columns !! 1
+        col2 = columns !! 2
+        points = zip (VS.toList col1) (VS.toList col2)
+    plot $ Data2D [Title "Sample Data"] [] points
+
 main :: IO ()
 main = do
-    --LabelledMatrix{..} <- readLabelledMatrix dataPath
+    demoClassify0
+    renderFigure_2_3
+
     --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
     --print r
-
-    let r = classify0 (matrix 2 [0.0, 0.0]) group labelIds 3
-        Just label = M.lookup r labels
-    print label
-    let r = classify0 (matrix 2 [1.0, 1.2]) group labelIds 3
-        Just label = M.lookup r labels
-    print label
-
-    --plot (sin . cos)
-    --plot $ Data2D [Title "Sample Data"] [] [(1, 2), (2, 4), (3, 6), (4, 8), (5, 10)]
 
 classify0 :: Matrix R -> Matrix R -> VU.Vector LabelId -> Int -> LabelId
 classify0 inX dataSet labelIds k =
