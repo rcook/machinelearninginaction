@@ -1,11 +1,10 @@
-module LAUtil.Charting (plot) where
+module LAUtil.Charting (renderSVG) where
 
 import           Graphics.Rendering.Chart.Backend.Diagrams
-import           Graphics.Rendering.Chart.Easy hiding (plot)
-import qualified Graphics.Rendering.Chart.Easy as CE
+import           Graphics.Rendering.Chart.Easy
 import           LAUtil.ScatterPlot
 
-plot :: [RRPlot] -> IO ()
-plot ps = toFile def "example.svg" $ do
-    layout_title .= "Categories"
-    mapM_ CE.plot ps
+renderSVG :: String -> FilePath -> [RRPlot] -> IO ()
+renderSVG title path ps = toFile def path $ do
+    layout_title .= title
+    mapM_ plot ps

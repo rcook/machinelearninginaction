@@ -48,7 +48,7 @@ input = LabelledMatrix
 renderFigure_2_3 :: IO ()
 renderFigure_2_3 = do
     m <- readLabelledMatrix dataPath
-    plot (plots m)
+    renderSVG "Categories" "example.svg" (plots m)
 
 main :: IO ()
 main = do
