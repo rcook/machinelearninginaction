@@ -47,7 +47,7 @@ demoClassify0 = do
 input :: Input
 input = Input
     (matrix 2 [1.0, 1.1, 2.0, 2.1, 3.0, 3.1, 4.0, 4.1, 5.0, 5.1, 6.0, 6.1])
-    (fromList [10, 10, 20, 20, 10, 30])
+    (VU.fromList [10, 10, 20, 20, 10, 30])
     (M.fromList [(10, "ten"), (20, "twenty"), (30, "thirty")])
 
 renderFigure_2_3 :: IO ()
