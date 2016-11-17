@@ -22,10 +22,10 @@ instance Exception CustomException
 type LabelId = Int
 
 data LabelledMatrix = LabelledMatrix
-  { _values :: Matrix R
-  , _labelIds :: VU.Vector LabelId
-  , _labelIdMap :: M.Map String LabelId
-  , _labelMap :: M.Map LabelId String
+  { lmValues :: Matrix R
+  , lmLabelIds :: VU.Vector LabelId
+  , lmLabelIdMap :: M.Map String LabelId
+  , lmLabelMap :: M.Map LabelId String
   } deriving Show
 
 splitLine :: String -> [String]

@@ -23,15 +23,15 @@ partitionIndices xs = foldr f M.empty (zip [0..] xs)
 
 plotSpecs :: LabelledMatrix -> Int -> Int -> [PlotSpec]
 plotSpecs LabelledMatrix{..} xColumnIndex yColumnIndex =
-    let columns = toColumns _values
+    let columns = toColumns lmValues
         column0 = columns !! xColumnIndex
         column1 = columns !! yColumnIndex
-        labelIds = VU.toList _labelIds
+        labelIds = VU.toList lmLabelIds
         partitions = M.toList $ partitionIndices labelIds
     in (flip map) partitions $ \(labelId, indices) ->
         let subseries = foldr f [] indices
                           where f i cs = let c = ((VS.!) column0 i, (VS.!) column1 i) in c : cs
-            Just labelText = M.lookup labelId _labelMap
+            Just labelText = M.lookup labelId lmLabelMap
         in (labelText, subseries)
 
 plots :: LabelledMatrix -> Int -> Int -> [RRPlot]
