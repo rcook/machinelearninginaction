@@ -45,15 +45,20 @@ input = LabelledMatrix
     (M.fromList [("ten", 10), ("twenty", 20), ("thirty", 30)])
     (M.fromList [(10, "ten"), (20, "twenty"), (30, "thirty")])
 
-renderFigure_2_3 :: IO ()
-renderFigure_2_3 = do
+renderChapter2Figures :: IO ()
+renderChapter2Figures = do
     m <- readLabelledMatrix dataPath
-    renderSVG "Categories" "example.svg" (plots m 1 2)
+
+    -- Figure 2.4
+    renderSVG "Ice cream vs. video games" "figure-2.4.svg" (plots m 1 2)
+
+    -- Figure 2.5
+    renderSVG "Video games vs. frequent flyer miles" "figure-2.5.svg" (plots m 0 1)
 
 main :: IO ()
 main = do
     demoClassify0
-    renderFigure_2_3
+    renderChapter2Figures
 
     --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
     --print r
