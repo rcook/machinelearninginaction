@@ -53,19 +53,8 @@ input = LabelledMatrix
 
 renderFigure_2_3 :: IO ()
 renderFigure_2_3 = do
-    LabelledMatrix{..} <- readLabelledMatrix dataPath
-    let columns = toColumns _values
-        col1 = columns !! 1
-        col2 = columns !! 2
-        points = zip (VS.toList col1) (VS.toList col2)
-    {-
-    plot $ Data2D
-        [Title "Figure 2.3", Style Points, Color Blue]
-        []
-        points
-    -}
-    plot' (plots input)
-    putStrLn "done"
+    m <- readLabelledMatrix dataPath
+    plot' (plots m)
 
 main :: IO ()
 main = do
