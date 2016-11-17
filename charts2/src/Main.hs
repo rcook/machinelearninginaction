@@ -30,8 +30,8 @@ partitionIndices :: [Z] -> M.Map Z [Int]
 partitionIndices xs = foldr f M.empty (zip [0..] xs)
     where f (i, x) m = M.alter (\mb -> case mb of Nothing -> Just [i]; Just is -> Just (i : is)) x m
 
-seriesPlotSpecs :: Input -> [SeriesPlotSpec]
-seriesPlotSpecs Input{..} =
+plotSpecs :: Input -> [SeriesPlotSpec]
+plotSpecs Input{..} =
     let columns = toColumns _values
         column0 = columns !! 0
         column1 = columns !! 1
@@ -43,11 +43,10 @@ seriesPlotSpecs Input{..} =
             Just labelText = M.lookup labelId _labels
         in (labelText, subseries)
 
-seriesPlots :: Input -> [RRPlot l]
-seriesPlots input = map (uncurry points) (seriesPlotSpecs input)
+plots :: Input -> [RRPlot l]
+plots = map (uncurry points) . plotSpecs
 
 main :: IO ()
 main = toFile def "example.svg" $ do
     layout_title .= "Amplitude Modulation"
-    let ps = seriesPlots input
-    mapM_ plot ps
+    mapM_ plot (plots input)
