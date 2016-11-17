@@ -4,6 +4,7 @@ module LAUtil
   , module LAUtil.Convert
   , module LAUtil.Data
   , module LAUtil.LabelledMatrix
+  , module LAUtil.ScatterPlot
   , module LAUtil.Sorting
   ) where
 
@@ -12,4 +13,5 @@ import           LAUtil.Charting
 import           LAUtil.Convert
 import           LAUtil.Data
 import           LAUtil.LabelledMatrix
+import           LAUtil.ScatterPlot
 import           LAUtil.Sorting

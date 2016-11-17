@@ -7,11 +7,12 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
+import           LAUtil hiding (plot)
+import qualified LAUtil
 import           Numeric.LinearAlgebra
 import           Numeric.LinearAlgebra.Devel
 
-import           LAUtil hiding (plot)
-import qualified LAUtil
+import           Charting
 
 group :: Matrix R
 group = matrix 2
@@ -43,6 +44,12 @@ demoClassify0 = do
         Just label = M.lookup r labels
     print label
 
+input :: Input
+input = Input
+    (matrix 2 [1.0, 1.1, 2.0, 2.1, 3.0, 3.1, 4.0, 4.1, 5.0, 5.1, 6.0, 6.1])
+    (fromList [10, 10, 20, 20, 10, 30])
+    (M.fromList [(10, "ten"), (20, "twenty"), (30, "thirty")])
+
 renderFigure_2_3 :: IO ()
 renderFigure_2_3 = do
     LabelledMatrix{..} <- readLabelledMatrix dataPath
@@ -50,10 +57,14 @@ renderFigure_2_3 = do
         col1 = columns !! 1
         col2 = columns !! 2
         points = zip (VS.toList col1) (VS.toList col2)
+    {-
     plot $ Data2D
         [Title "Figure 2.3", Style Points, Color Blue]
         []
         points
+    -}
+    plot' (plots input)
+    putStrLn "done"
 
 main :: IO ()
 main = do

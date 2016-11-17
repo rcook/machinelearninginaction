@@ -27,8 +27,10 @@ library
                             , LAUtil.Convert
                             , LAUtil.Data
                             , LAUtil.LabelledMatrix
+                            , LAUtil.ScatterPlot
                             , LAUtil.Sorting
-  build-depends:              base
+  build-depends:              Chart
+                            , base
                             , containers
                             , directory
                             , easyplot
