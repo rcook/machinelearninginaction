@@ -12,7 +12,7 @@ import           Graphics.Rendering.Chart.Easy hiding (Matrix, Vector)
 import           LAUtil.LabelledMatrix
 import           Numeric.LinearAlgebra
 
-type RRPlot l = EC l (PlotPoints R R)
+type RRPlot = EC (Layout R R) (PlotPoints R R)
 type Coordinate = (R, R)
 type CoordinateList = [Coordinate]
 type PlotSpec = (String, CoordinateList)
@@ -34,5 +34,5 @@ plotSpecs LabelledMatrix{..} =
             Just labelText = M.lookup labelId _labelMap
         in (labelText, subseries)
 
-plots :: LabelledMatrix -> [RRPlot l]
+plots :: LabelledMatrix -> [RRPlot]
 plots = map (uncurry points) . plotSpecs
