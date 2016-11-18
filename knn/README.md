@@ -23,3 +23,18 @@ sudo yum install blas-devel lapack-devel
 
 ```bash
 stack build
+```
+
+# Setting up runtime environment
+
+On Windows, you'll need to run `script\env.cmd` (Windows command prompt) or `script\env.ps1` (PowerShell) to set up the `PATH` environment variable so that various libraries (e.g. ICU) can be located at runtime:
+
+```cmd
+script\env.cmd
+```
+
+or
+
+```ps
+script\env.ps1
+```
