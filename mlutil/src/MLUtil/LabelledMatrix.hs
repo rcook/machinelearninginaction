@@ -1,4 +1,4 @@
-module LAUtil.LabelledMatrix
+module MLUtil.LabelledMatrix
   ( LabelId
   , LabelledMatrix (..)
   , readLabelledMatrix

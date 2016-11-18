@@ -1,4 +1,4 @@
-module LAUtil.Folding
+module MLUtil.Folding
   ( columnHead
   , foldColumn
   ) where

@@ -1,7 +1,7 @@
 resolver: lts-7.8
 packages:
 - .
-- ../lautil
+- ../mlutil
 extra-deps:
 - hmatrix-0.18.0.0
 flags: {}

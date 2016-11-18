@@ -19,5 +19,5 @@ executable knn-app
   build-depends:              base >= 4.7 && < 5
                             , containers
                             , hmatrix
-                            , lautil
+                            , mlutil
                             , vector

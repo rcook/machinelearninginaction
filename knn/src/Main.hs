@@ -7,7 +7,7 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
-import           LAUtil
+import           MLUtil
 import           Numeric.LinearAlgebra
 
 group :: Matrix R

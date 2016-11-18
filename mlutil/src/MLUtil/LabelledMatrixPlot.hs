@@ -1,18 +1,15 @@
 {-# LANGUAGE RecordWildCards #-}
 
-module LAUtil.ScatterPlot
-  ( RRPlot
-  , plots
-  ) where
+module MLUtil.LabelledMatrixPlot (plots) where
 
 import qualified Data.Map as M
 import           Data.Vector.Storable as VS hiding (foldr, map)
 import qualified Data.Vector.Unboxed as VU
-import           Graphics.Rendering.Chart.Easy hiding (Matrix, Vector)
-import           LAUtil.LabelledMatrix
+import           Graphics.Rendering.Chart.Easy
+import           MLUtil.LabelledMatrix
+import           MLUtil.RRScatterPlot
 import           Numeric.LinearAlgebra
 
-type RRPlot = EC (Layout R R) (PlotPoints R R)
 type Coordinate = (R, R)
 type CoordinateList = [Coordinate]
 type PlotSpec = (String, CoordinateList)
@@ -34,5 +31,5 @@ plotSpecs LabelledMatrix{..} xColumnIndex yColumnIndex =
             Just labelText = M.lookup labelId lmLabelMap
         in (labelText, subseries)
 
-plots :: LabelledMatrix -> Int -> Int -> [RRPlot]
+plots :: LabelledMatrix -> Int -> Int -> [RRScatterPlot]
 plots m xColumnIndex yColumnIndex = map (uncurry points) (plotSpecs m xColumnIndex yColumnIndex)
