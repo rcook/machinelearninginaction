@@ -1,3 +1,4 @@
-# LAUtil
+# `mlutil`
 
-Utility functions for use with `hmatrix` and `Chart` packages etc.
+Machine learning-oriented utility functions for use with `hmatrix` and `Chart`
+packages etc.
