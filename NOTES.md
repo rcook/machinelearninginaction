@@ -7,8 +7,8 @@ GitHub repo containing Haskell translations from the original Python sources.
 
 I plan to translate as many of the Python examples into Haskell as possible and
 to create a package of Haskell support functions (tentatively called
-[`mlutil`][mlutil]). I'll then contribute them to the [DataHaskell][dh] project
-if they might be of interest to others.
+[`mlutil`][mlutil]). I'll then contribute them to the [DataHaskell][dh]
+community if they might be of interest to others.
 
 [dh]: https://github.com/datahaskell
 [mlutil]: mlutil/README.md
