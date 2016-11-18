@@ -8,7 +8,6 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           MLUtil
-import           Numeric.LinearAlgebra
 
 group :: Matrix R
 group = matrix 2

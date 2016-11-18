@@ -6,9 +6,9 @@ import qualified Data.Map as M
 import           Data.Vector.Storable as VS hiding (foldr, map)
 import qualified Data.Vector.Unboxed as VU
 import           Graphics.Rendering.Chart.Easy
+import           MLUtil.Imports
 import           MLUtil.LabelledMatrix
 import           MLUtil.RRScatterPlot
-import           Numeric.LinearAlgebra
 
 type Coordinate = (R, R)
 type CoordinateList = [Coordinate]

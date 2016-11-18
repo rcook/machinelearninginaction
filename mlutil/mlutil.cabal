@@ -25,6 +25,7 @@ library
                             , MLUtil.Arithmetic
                             , MLUtil.Charting
                             , MLUtil.Folding
+                            , MLUtil.Imports
                             , MLUtil.LabelledMatrix
                             , MLUtil.LabelledMatrixPlot
                             , MLUtil.Normalization

@@ -3,7 +3,7 @@ module MLUtil.Folding
   , foldColumn
   ) where
 
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 
 columnHead :: Matrix R -> Int -> R
 columnHead m c = m `atIndex` (0, c)

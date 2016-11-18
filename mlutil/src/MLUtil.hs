@@ -3,6 +3,7 @@ module MLUtil
   ( module MLUtil.Arithmetic
   , module MLUtil.Charting
   , module MLUtil.Folding
+  , module MLUtil.Imports
   , module MLUtil.LabelledMatrix
   , module MLUtil.LabelledMatrixPlot
   , module MLUtil.Normalization
@@ -13,6 +14,7 @@ module MLUtil
 import           MLUtil.Arithmetic
 import           MLUtil.Charting
 import           MLUtil.Folding
+import           MLUtil.Imports
 import           MLUtil.LabelledMatrix
 import           MLUtil.LabelledMatrixPlot
 import           MLUtil.Normalization

@@ -3,7 +3,7 @@ module MLUtil.Arithmetic
   , sumRows
   ) where
 
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 
 sumColumns :: Matrix R -> Matrix R
 sumColumns m = konst 1.0 (1, rows m) <> m

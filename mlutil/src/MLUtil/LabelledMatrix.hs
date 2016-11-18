@@ -13,7 +13,7 @@ import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Storable.Mutable as VSM
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Unboxed.Mutable as VUM
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 import           Numeric.LinearAlgebra.Devel
 
 data CustomException = CustomException String deriving Show

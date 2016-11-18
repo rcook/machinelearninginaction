@@ -1,6 +1,6 @@
 module MLUtil.RRScatterPlot (RRScatterPlot) where
 
 import           Graphics.Rendering.Chart.Easy
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 
 type RRScatterPlot = EC (Layout R R) (PlotPoints R R)

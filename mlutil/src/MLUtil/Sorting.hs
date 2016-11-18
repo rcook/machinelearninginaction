@@ -11,7 +11,7 @@ import qualified Data.Vector.Algorithms.Intro as VAI
 import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Unboxed.Mutable as VUM
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 
 -- Naive implementation
 {-

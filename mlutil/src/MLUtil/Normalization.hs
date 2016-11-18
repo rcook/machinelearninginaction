@@ -9,7 +9,7 @@ module MLUtil.Normalization
 
 import qualified Data.Vector.Storable as VS
 import           MLUtil.Folding
-import           Numeric.LinearAlgebra
+import           MLUtil.Imports
 
 data ColumnNormalization = ColumnNormalization
   { cnValues :: Vector R
