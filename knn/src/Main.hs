@@ -44,7 +44,7 @@ input = LabelledMatrix
 
 renderChapter2Figures :: IO ()
 renderChapter2Figures = do
-    m <- readLabelledMatrix dataPath
+    Just m <- readLabelledMatrix dataPath
 
     -- Figure 2.4
     renderSVG "Ice cream vs. video games" "figure-2.4.svg" (plots m 1 2)
@@ -54,7 +54,7 @@ renderChapter2Figures = do
 
 testNormalizeMatrixColumns :: IO ()
 testNormalizeMatrixColumns = do
-    m <- readLabelledMatrix dataPath
+    Just m <- readLabelledMatrix dataPath
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
         m' = m { lmValues = mnValues }
     renderSVG "Normalized: video games vs. frequent flyer miles" "figure-2.5-normalized.svg" (plots m' 0 1)
@@ -66,7 +66,7 @@ intFraction r x = round $ r * fromIntegral x
 
 datingClassTest :: IO ()
 datingClassTest = do
-    m <- readLabelledMatrix dataPath
+    Just m <- readLabelledMatrix dataPath
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
         testRatio = 0.1
         rowCount = rows mnValues

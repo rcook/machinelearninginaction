@@ -1,6 +1,7 @@
 module MLUtil.LabelledMatrix
   ( LabelId
   , LabelledMatrix (..)
+  , mkLabelledMatrix
   , readLabelledMatrix
   ) where
 
@@ -16,9 +17,6 @@ import qualified Data.Vector.Unboxed.Mutable as VUM
 import           MLUtil.Imports
 import           MLUtil.Util
 import           Numeric.LinearAlgebra.Devel
-
-data CustomException = CustomException String deriving Show
-instance Exception CustomException
 
 type LabelId = Int
 
@@ -38,13 +36,14 @@ swapPair (a, b) = (b, a)
 swapMap :: (Ord k, Ord v) => M.Map k v -> M.Map v k
 swapMap = M.fromList . map swapPair . M.toList
 
-readLabelledMatrix :: FilePath -> IO LabelledMatrix
-readLabelledMatrix path = do
-    ls <- lines <$> readFile path
-    let rowCount = length ls
-    unless (rowCount > 0) (throwIO $ CustomException ("No rows in file " ++ path))
+readLabelledMatrix :: FilePath -> IO (Maybe LabelledMatrix)
+readLabelledMatrix path = (mkLabelledMatrix . lines) <$> readFile path
 
-    let tokenCount = length $ splitLine (head ls)
+mkLabelledMatrix :: [String] -> Maybe LabelledMatrix
+mkLabelledMatrix [] = Nothing
+mkLabelledMatrix ls =
+    let rowCount = length ls
+        tokenCount = length $ splitLine (head ls)
         columnCount = tokenCount - 1
 
         (valuesV, labelIds, labels) = runST $ do
@@ -73,5 +72,4 @@ readLabelledMatrix path = do
             return (values', labelIds', labels')
 
         values = matrixFromVector RowMajor rowCount columnCount valuesV
-
-    return $ LabelledMatrix values labelIds labels (swapMap labels)
+    in Just $ LabelledMatrix values labelIds labels (swapMap labels)
