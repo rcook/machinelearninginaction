@@ -1,13 +1,13 @@
 module Main (main) where
 
-import qualified System.FilePath.Glob as Glob
-import qualified Test.DocTest as DocTest
+import           System.FilePath.Glob
+import           Test.DocTest
 
-includeDirs :: [String]
+includeDirs :: [FilePath]
 includeDirs = []
 
-doctestWithIncludeDirs :: [String] -> IO ()
-doctestWithIncludeDirs fs = DocTest.doctest (map ("-I" ++) includeDirs ++ fs)
+doctestWithIncludeDirs :: [FilePath] -> IO ()
+doctestWithIncludeDirs fs = doctest (map ("-I" ++) includeDirs ++ fs)
 
 main :: IO ()
-main = Glob.glob "src/**/*.hs" >>= doctestWithIncludeDirs
+main = glob "src/**/*.hs" >>= doctestWithIncludeDirs
