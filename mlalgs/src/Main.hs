@@ -35,9 +35,8 @@ renderFigures = do
 intFraction :: Float -> Int -> Int
 intFraction r x = round $ r * fromIntegral x
 
-datingClassTest :: IO ()
-datingClassTest = do
-    Just m <- readLabelledMatrix "../Ch02/datingTestSet2.txt"
+errorRate :: LabelledMatrix -> R -> R
+errorRate m testRatio =
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
         testRatio = 0.05
         rowCount = rows mnValues
@@ -46,16 +45,21 @@ datingClassTest = do
         testMatrix = subMatrix (0, 0) (testRowCount, columnCount) mnValues
         trainingMatrix = subMatrix (testRowCount, 0) (rowCount - testRowCount, columnCount) mnValues
         trainingLabelIds = VU.slice testRowCount (rowCount - testRowCount) (lmLabelIds m)
-    (passCount, errorCount) <- forFoldM (0, 0) [0..testRowCount - 1] $ \(passCount', errorCount') r -> do
-        let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
-            actualLabelId = classify0 testVector trainingMatrix trainingLabelIds 3
-            expectedLabelId = (VU.!) (lmLabelIds m) r
-        return $ if actualLabelId == expectedLabelId
-            then (passCount' + 1, errorCount')
-            else (passCount', errorCount' + 1)
-    let errorRate :: R
-        errorRate = 100.0 * fromIntegral errorCount / fromIntegral (passCount + errorCount)
-    putStrLn (printf "Error rate %0.01f%%" $ errorRate)
+        (passCount, errorCount) = forFold (0, 0) [0..testRowCount - 1] $ \r (passCount', errorCount') ->
+            let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
+                actualLabelId = classify0 testVector trainingMatrix trainingLabelIds 3
+                expectedLabelId = (VU.!) (lmLabelIds m) r
+            in if actualLabelId == expectedLabelId
+                then (passCount' + 1, errorCount')
+                else (passCount', errorCount' + 1)
+    in fromIntegral errorCount / fromIntegral (passCount + errorCount)
+
+datingClassTest :: IO ()
+datingClassTest = do
+    Just m <- readLabelledMatrix "../Ch02/datingTestSet2.txt"
+    let r = errorRate m 0.05
+    putStrLn (printf "Error rate %0.01f%%" $ 100.0 * r)
+
 
 main :: IO ()
 main = do
