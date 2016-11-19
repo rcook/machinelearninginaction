@@ -2,6 +2,7 @@
 
 module Main (main) where
 
+import           Control.Monad
 import qualified Data.List as L
 import qualified Data.Map as M
 import qualified Data.Vector as V
@@ -56,17 +57,31 @@ renderChapter2Figures = do
 testNormalizeMatrixColumns :: IO ()
 testNormalizeMatrixColumns = do
     m <- readLabelledMatrix dataPath
-    let m' = m { lmValues = mnValues $ normalizeMatrixColumns (lmValues m) }
+    let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
+        m' = m { lmValues = mnValues }
     renderSVG "Normalized: video games vs. frequent flyer miles" "figure-2.5-normalized.svg" (plots m' 0 1)
+    print mnRanges
+    print mnMins
+
+testingClassifier :: IO ()
+testingClassifier = do
+    m <- readLabelledMatrix dataPath
+    let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
+        testRatio :: Float
+        testRatio = 0.1
+        rowCount = rows mnValues
+        testCount = round $ testRatio * fromIntegral rowCount
+    forM_ [0..testCount] $ \i -> do
+        -- Pseudocode
+        let testMatrix = toMatrix $ getRow mnValues i
+            trainingMatrices
 
 main :: IO ()
 main = do
-    demoClassify0
-    renderChapter2Figures
-    testNormalizeMatrixColumns
-
-    --let r = classify0 (matrix 3 [0.0, 0.0, 0.0]) _values _labelIds 3
-    --print r
+    --demoClassify0
+    --renderChapter2Figures
+    --testNormalizeMatrixColumns
+    testingClassifier
 
 classify0 :: Matrix R -> Matrix R -> VU.Vector LabelId -> Int -> LabelId
 classify0 inX dataSet labelIds k =
