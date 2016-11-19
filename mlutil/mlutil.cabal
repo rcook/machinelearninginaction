@@ -50,6 +50,13 @@ test-suite spec
   hs-source-dirs:             spec
   default-language:           Haskell2010
   main-is:                    Spec.hs
+  other-modules:              ArithmeticSpec
+                            , Expectations
+                            , FoldingSpec
+                            , LabelledMatrixSpec
+                            , NormalizationSpec
+                            , RoundableSpec
+                            , SortingSpec
   build-depends:              base
                             , containers
                             , hspec
