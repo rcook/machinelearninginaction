@@ -1,8 +1,8 @@
-name:                         knn
+name:                         mlalgs
 version:                      0.1.0.0
-synopsis:                     k-Nearest-Neighbours Algorithm
+synopsis:                     Basic machine learning algorithms
 description:                  Please see README.md
-homepage:                     https://github.com/rcook/knn#readme
+homepage:                     https://github.com/rcook/mlalgs#readme
 license:                      MIT
 license-file:                 LICENSE
 author:                       Richard Cook
@@ -15,20 +15,20 @@ cabal-version:                >=1.10
 library
   hs-source-dirs:             lib
   default-language:           Haskell2010
-  exposed-modules:            KNN.Classify0
+  exposed-modules:            MLAlgs.Classify0
   build-depends:              base
                             , containers
                             , mlutil
                             , vector
 
-executable knn-app
+executable mlalgs-app
   hs-source-dirs:             src
   main-is:                    Main.hs
   default-language:           Haskell2010
   build-depends:              base
                             , containers
                             , hmatrix
-                            , knn
+                            , mlalgs
                             , mlutil
                             , vector
 
@@ -39,4 +39,4 @@ test-suite spec
   main-is:                    Spec.hs
   build-depends:              base
                             , hspec
-                            , knn
+                            , mlalgs

@@ -1,4 +1,4 @@
-module KNN.Classify0 (classify0) where
+module MLAlgs.Classify0 (classify0) where
 
 import qualified Data.List as L
 import qualified Data.Map as M

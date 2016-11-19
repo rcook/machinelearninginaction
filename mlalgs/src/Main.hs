@@ -8,7 +8,7 @@ import qualified Data.Map as M
 import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
-import           KNN.Classify0
+import           MLAlgs.Classify0
 import           MLUtil
 
 dataPath :: FilePath
