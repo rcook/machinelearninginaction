@@ -6,6 +6,7 @@ module MLUtil.Roundable
 
 import qualified Data.Vector.Storable as VS
 import           MLUtil.Imports
+import           Numeric.LinearAlgebra.Devel
 
 defaultPrecision :: Int
 defaultPrecision = 5
@@ -20,3 +21,6 @@ instance Roundable R where
 
 instance (Roundable a, VS.Storable a) => Roundable (Vector a) where
     roundToDefaultPrecision = VS.map roundToDefaultPrecision
+
+instance (Roundable a, VS.Storable a, Element a) => Roundable (Matrix a) where
+    roundToDefaultPrecision = mapMatrixWithIndex (\(_, _) x -> roundToDefaultPrecision x)

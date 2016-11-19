@@ -5,10 +5,9 @@ module NormalizationSpec
   , spec
   ) where
 
+import           Expectations
 import           MLUtil
 import           Test.Hspec
-
-import           Expectations
 
 m :: Matrix R
 m = matrix 3 [1.0, 2.0, 3.0, 4.0, 5.0, 100.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0]
@@ -31,6 +30,13 @@ spec = do
             cnValues `shouldRoundTo` vector [0.0, 1.0, 0.05155, 0.08247]
             cnRange `shouldBe` 97.0
             cnMin `shouldBe` 3.0
+
+    describe "normalizeMatrixColumns" $ do
+        it "normalizes matrix" $ do
+            let MatrixNormalization{..} = normalizeMatrixColumns m
+            mnValues `shouldRoundTo` matrix 3 [0.0, 0.0, 0.0, 0.375, 0.375, 1.0, 0.625, 0.625, 0.05155, 1.0, 1.0, 0.08247]
+            mnRanges `shouldBe` [8.0, 8.0, 97.0]
+            mnMins `shouldBe` [1.0, 2.0, 3.0]
 
 main :: IO ()
 main = hspec spec
