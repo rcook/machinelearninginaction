@@ -10,6 +10,7 @@ import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           MLAlgs.Classify0
 import           MLUtil
+import           Text.Printf
 
 dataPath :: FilePath
 dataPath = "../Ch02/datingTestSet.txt"
@@ -51,8 +52,9 @@ datingClassTest = do
         return $ if actualLabelId == expectedLabelId
             then (passCount' + 1, errorCount')
             else (passCount', errorCount' + 1)
-    print passCount
-    print errorCount
+    let errorRate :: R
+        errorRate = 100.0 * fromIntegral errorCount / fromIntegral (passCount + errorCount)
+    putStrLn (printf "Error rate %0.01f%%" $ errorRate)
 
 main :: IO ()
 main = do
