@@ -5,6 +5,7 @@ import qualified Data.Map as M
 import qualified Data.Vector.Unboxed as VU
 import           MLUtil
 
+-- cf kNN.classify0
 classify0 :: Matrix R -> Matrix R -> VU.Vector LabelId -> Int -> LabelId
 classify0 inX dataSet labelIds k =
     let dataSetSize = rows dataSet

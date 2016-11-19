@@ -32,36 +32,7 @@ renderFigures = do
     print mnRanges
     print mnMins
 
-intFraction :: Float -> Int -> Int
-intFraction r x = round $ r * fromIntegral x
-
-errorRate :: LabelledMatrix -> R -> R
-errorRate m testRatio =
-    let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
-        testRatio = 0.05
-        rowCount = rows mnValues
-        columnCount = cols mnValues
-        testRowCount = intFraction testRatio rowCount
-        testMatrix = subMatrix (0, 0) (testRowCount, columnCount) mnValues
-        trainingMatrix = subMatrix (testRowCount, 0) (rowCount - testRowCount, columnCount) mnValues
-        trainingLabelIds = VU.slice testRowCount (rowCount - testRowCount) (lmLabelIds m)
-        (passCount, errorCount) = forFold (0, 0) [0..testRowCount - 1] $ \r (passCount', errorCount') ->
-            let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
-                actualLabelId = classify0 testVector trainingMatrix trainingLabelIds 3
-                expectedLabelId = (VU.!) (lmLabelIds m) r
-            in if actualLabelId == expectedLabelId
-                then (passCount' + 1, errorCount')
-                else (passCount', errorCount' + 1)
-    in fromIntegral errorCount / fromIntegral (passCount + errorCount)
-
-datingClassTest :: IO ()
-datingClassTest = do
-    Just m <- readLabelledMatrix "../Ch02/datingTestSet2.txt"
-    let r = errorRate m 0.05
-    putStrLn (printf "Error rate %0.01f%%" $ 100.0 * r)
-
-
 main :: IO ()
 main = do
     --renderFigures
-    datingClassTest
+    putStrLn "Done"
