@@ -14,8 +14,8 @@ import           MLUtil
 dataPath :: FilePath
 dataPath = "../Ch02/datingTestSet.txt"
 
-renderChapter2Figures :: IO ()
-renderChapter2Figures = do
+renderFigures :: IO ()
+renderFigures = do
     Just m <- readLabelledMatrix dataPath
 
     -- Figure 2.4
@@ -56,5 +56,5 @@ datingClassTest = do
 
 main :: IO ()
 main = do
-    --renderChapter2Figures
+    --renderFigures
     datingClassTest
