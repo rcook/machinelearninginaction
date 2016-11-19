@@ -8,9 +8,6 @@ import qualified Data.Vector.Storable as VS
 import           MLUtil.Imports
 import           Numeric.LinearAlgebra.Devel
 
-defaultPrecision :: Int
-defaultPrecision = 5
-
 class Roundable a where
     roundToPrecision :: Int -> a -> a
 
