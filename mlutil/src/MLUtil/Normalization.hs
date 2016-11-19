@@ -15,7 +15,7 @@ data ColumnNormalization = ColumnNormalization
   { cnValues :: Vector R
   , cnRange :: R
   , cnMin :: R
-  } deriving Show
+  } deriving (Eq, Show)
 
 data MatrixNormalization = MatrixNormalization
   { mnValues :: Matrix R

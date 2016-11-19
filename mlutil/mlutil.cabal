@@ -30,6 +30,7 @@ library
                             , MLUtil.LabelledMatrixPlot
                             , MLUtil.Normalization
                             , MLUtil.RRScatterPlot
+                            , MLUtil.Roundable
                             , MLUtil.Sorting
                             , MLUtil.Util
   build-depends:              Chart
@@ -43,3 +44,13 @@ library
                             , temporary
                             , vector
                             , vector-algorithms
+
+test-suite spec
+  type:                       exitcode-stdio-1.0
+  hs-source-dirs:             spec
+  default-language:           Haskell2010
+  main-is:                    Spec.hs
+  build-depends:              base
+                            , hspec
+                            , mlutil
+                            , vector
