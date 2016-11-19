@@ -37,17 +37,18 @@ intFraction r x = round $ r * fromIntegral x
 
 datingClassTest :: IO ()
 datingClassTest = do
-    Just m <- readLabelledMatrix dataPath
+    Just m <- readLabelledMatrix "../Ch02/datingTestSet2.txt"
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
-        testRatio = 0.1
+        testRatio = 0.05
         rowCount = rows mnValues
         columnCount = cols mnValues
         testRowCount = intFraction testRatio rowCount
         testMatrix = subMatrix (0, 0) (testRowCount, columnCount) mnValues
         trainingMatrix = subMatrix (testRowCount, 0) (rowCount - testRowCount, columnCount) mnValues
+        trainingLabelIds = VU.slice testRowCount (rowCount - testRowCount) (lmLabelIds m)
     (passCount, errorCount) <- forFoldM (0, 0) [0..testRowCount - 1] $ \(passCount', errorCount') r -> do
         let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
-            actualLabelId = classify0 testVector trainingMatrix (lmLabelIds m) 3
+            actualLabelId = classify0 testVector trainingMatrix trainingLabelIds 3
             expectedLabelId = (VU.!) (lmLabelIds m) r
         return $ if actualLabelId == expectedLabelId
             then (passCount' + 1, errorCount')
