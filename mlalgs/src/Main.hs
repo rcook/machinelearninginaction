@@ -34,5 +34,5 @@ renderFigures = do
 
 main :: IO ()
 main = do
-    --renderFigures
+    renderFigures
     putStrLn "Done"
