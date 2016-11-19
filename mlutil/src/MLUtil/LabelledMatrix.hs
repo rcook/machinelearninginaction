@@ -14,6 +14,7 @@ import qualified Data.Vector.Storable.Mutable as VSM
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Unboxed.Mutable as VUM
 import           MLUtil.Imports
+import           MLUtil.Util
 import           Numeric.LinearAlgebra.Devel
 
 data CustomException = CustomException String deriving Show
@@ -30,9 +31,6 @@ data LabelledMatrix = LabelledMatrix
 
 splitLine :: String -> [String]
 splitLine = splitOneOf [' ', '\t']
-
-forFoldM :: (Foldable t, Monad m) => b -> t a -> (b -> a -> m b) -> m b
-forFoldM = flip . flip foldM
 
 swapPair :: (a, b) -> (b, a)
 swapPair (a, b) = (b, a)

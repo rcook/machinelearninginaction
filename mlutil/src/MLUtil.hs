@@ -9,6 +9,7 @@ module MLUtil
   , module MLUtil.Normalization
   , module MLUtil.RRScatterPlot
   , module MLUtil.Sorting
+  , module MLUtil.Util
   ) where
 
 import           MLUtil.Arithmetic
@@ -20,3 +21,4 @@ import           MLUtil.LabelledMatrixPlot
 import           MLUtil.Normalization
 import           MLUtil.RRScatterPlot
 import           MLUtil.Sorting
+import           MLUtil.Util

@@ -10,25 +10,23 @@ import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           MLUtil
 
-group :: Matrix R
-group = matrix 2
-  [ 1.0, 1.1
-  , 1.0, 1.0
-  , 0.0, 0.0
-  , 0.0, 0.1
-  ]
-
-labels :: M.Map LabelId String
-labels = M.fromList [(1, "A"), (2, "B")]
-
-labelIds :: VU.Vector LabelId
-labelIds = VU.fromList [1, 1, 2, 2]
-
 dataPath :: FilePath
 dataPath = "../Ch02/datingTestSet.txt"
 
 demoClassify0 :: IO ()
 demoClassify0 = do
+    let group :: Matrix R
+        group = matrix 2
+          [ 1.0, 1.1
+          , 1.0, 1.0
+          , 0.0, 0.0
+          , 0.0, 0.1
+          ]
+        labels :: M.Map LabelId String
+        labels = M.fromList [(1, "A"), (2, "B")]
+        labelIds :: VU.Vector LabelId
+        labelIds = VU.fromList [1, 1, 2, 2]
+
     let r = classify0 (row [0.0, 0.0]) group labelIds 3
         Just label = M.lookup r labels
     print label
@@ -63,25 +61,35 @@ testNormalizeMatrixColumns = do
     print mnRanges
     print mnMins
 
-testingClassifier :: IO ()
-testingClassifier = do
+intFraction :: Float -> Int -> Int
+intFraction r x = round $ r * fromIntegral x
+
+datingClassTest :: IO ()
+datingClassTest = do
     m <- readLabelledMatrix dataPath
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
-        testRatio :: Float
         testRatio = 0.1
         rowCount = rows mnValues
-        testCount = round $ testRatio * fromIntegral rowCount
-    forM_ [0..testCount] $ \i -> do
-        -- Pseudocode
-        let testMatrix = toMatrix $ getRow mnValues i
-            trainingMatrices
+        columnCount = cols mnValues
+        testRowCount = intFraction testRatio rowCount
+        testMatrix = subMatrix (0, 0) (testRowCount, columnCount) mnValues
+        trainingMatrix = subMatrix (testRowCount, 0) (rowCount - testRowCount, columnCount) mnValues
+    (passCount, errorCount) <- forFoldM (0, 0) [0..testRowCount - 1] $ \(passCount', errorCount') r -> do
+        let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
+            actualLabelId = classify0 testVector trainingMatrix (lmLabelIds m) 3
+            expectedLabelId = (VU.!) (lmLabelIds m) r
+        return $ if actualLabelId == expectedLabelId
+            then (passCount' + 1, errorCount')
+            else (passCount', errorCount' + 1)
+    print passCount
+    print errorCount
 
 main :: IO ()
 main = do
     --demoClassify0
     --renderChapter2Figures
     --testNormalizeMatrixColumns
-    testingClassifier
+    datingClassTest
 
 classify0 :: Matrix R -> Matrix R -> VU.Vector LabelId -> Int -> LabelId
 classify0 inX dataSet labelIds k =
