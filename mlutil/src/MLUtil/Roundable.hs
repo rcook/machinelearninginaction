@@ -12,15 +12,14 @@ defaultPrecision :: Int
 defaultPrecision = 5
 
 class Roundable a where
-    roundToDefaultPrecision :: a -> a
+    roundToPrecision :: Int -> a -> a
 
 instance Roundable R where
     -- http://stackoverflow.com/questions/12450501/round-number-to-specified-number-of-digits
-    roundToDefaultPrecision x = (fromInteger $ round $ x * (10 ^ n)) / (10.0 ^^ n)
-        where n = defaultPrecision
+    roundToPrecision n x = (fromInteger $ round $ x * (10 ^ n)) / (10.0 ^^ n)
 
 instance (Roundable a, VS.Storable a) => Roundable (Vector a) where
-    roundToDefaultPrecision = VS.map roundToDefaultPrecision
+    roundToPrecision n = VS.map (roundToPrecision n)
 
 instance (Roundable a, VS.Storable a, Element a) => Roundable (Matrix a) where
-    roundToDefaultPrecision = mapMatrixWithIndex (\(_, _) x -> roundToDefaultPrecision x)
+    roundToPrecision n = mapMatrixWithIndex (\_ x -> roundToPrecision n x)

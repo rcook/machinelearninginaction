@@ -21,7 +21,7 @@ m = matrix 3
 spec :: Spec
 spec = do
     describe "mkLabelledMatrix" $ do
-        it "reads column head 0" $ do
+        it "matrix and labels match expected" $ do
             let input =
                   [ "1.0 2.0 3.0 label0"
                   , "4.0 5.0 100.0 label1"
@@ -32,8 +32,7 @@ spec = do
             lmValues `shouldBe` m
             lmLabelIds `shouldBe` VU.fromList [0, 1, 0, 0]
             lmLabelIdMap `shouldBe` M.fromList [("label0", 0), ("label1", 1)]
-            print $ mkLabelledMatrix input
-            0.0 `shouldBe` 0.0
+            lmLabelMap `shouldBe` M.fromList [(0, "label0"), (1, "label1")]
 
 main :: IO ()
 main = hspec spec
