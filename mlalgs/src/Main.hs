@@ -54,6 +54,9 @@ renderFigures = do
         defaultChartLabels { clTitle = Just "Figure 2.5 (normalized)", clYAxisLabel = Just "Video games", clXAxisLabel =  Just "Frequent flyer miles" }
         (colouredSeriesPlots m' 0 1)
 
+k :: Int
+k = 3
+
 -- cf kNN.classifyPerson
 classifyPerson :: IO ()
 classifyPerson = do
@@ -67,7 +70,7 @@ classifyPerson = do
 
     let testMatrix = row [frequentFlyerMiles, videoGameTime, litresIceCream]
         normalizedTestMatrix = (testMatrix - row mnMins) / row mnRanges
-        r = classify0 normalizedTestMatrix mnValues (lmLabelIds m) 3
+        r = classify0 normalizedTestMatrix mnValues (lmLabelIds m) k
         Just label = M.lookup r (lmLabelMap m)
 
     putStrLn $ "Result: " ++ label
@@ -86,25 +89,43 @@ readImageVector height width path = do
     return xs
 
 -- cf kNN.handwritingClassTest
-blah :: IO ()
-blah = do
+handwritingClassTest :: IO ()
+handwritingClassTest = do
     let height = 32
         width = 32
         columnCount = height * width
-        dir = "data/digits/trainingDigits"
-    paths <- listDirectory dir
-    (values, labelIds) <- forFoldM ([], []) paths $ \(values', labelIds') p -> do
+        trainingDataDir = "data/digits/trainingDigits"
+        testDataDir = "data/digits/testDigits"
+    trainingPaths <- listDirectory trainingDataDir
+    testPaths <- listDirectory testDataDir
+
+    (values, labelIds) <- forFoldM ([], []) (L.reverse trainingPaths) $ \(values', labelIds') p -> do
         let labelId = read $ head (splitOneOf ['_'] p)
-        xs <- readImageVector 32 32 (dir </> p)
-        return $ (values' ++ xs, labelIds' ++ labelId)
+        xs <- readImageVector 32 32 (trainingDataDir </> p)
+        return $ (xs ++ values', labelId : labelIds')
+
+    putStrLn "Loading training data"
+
     let trainingMatrix = matrix columnCount values
-        trainingLabelIds :: VU.Vector LabelId
         trainingLabelIds = VU.fromList labelIds
-    print $ trainingLabelIds
+
+    putStrLn "Classifying test data"
+
+    (errorCount, passCount) <- forFoldM (0, 0) testPaths $ \(errorCount', passCount') p -> do
+        let labelId = read $ head (splitOneOf ['_'] p)
+        m <- row <$> readImageVector 32 32 (testDataDir </> p)
+        let r = classify0 m trainingMatrix trainingLabelIds k
+        return $ if r == labelId
+            then (errorCount', passCount' + 1)
+            else (errorCount' + 1, passCount')
+
+    let errorRate :: R
+        errorRate = 100.0 * fromIntegral errorCount / fromIntegral (errorCount + passCount)
+    putStrLn $ printf "Error rate: %0.1f%%" errorRate
 
 main :: IO ()
 main = do
     --renderFigures
     --classifyPerson
-    blah
+    handwritingClassTest
     putStrLn "Done"
