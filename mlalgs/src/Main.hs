@@ -53,17 +53,9 @@ renderFigures = do
 -- cf kNN.classifyPerson
 classifyPerson :: IO ()
 classifyPerson = do
-    result :: Maybe R <- prompt "Time playing video games: "
-    when (isNothing result) (putStrLn "Quit" >> exitSuccess)
-    let Just videoGameTime = result
-
-    result :: Maybe R <- prompt "Frequent flyer miles: "
-    when (isNothing result) (putStrLn "Quit" >> exitSuccess)
-    let Just frequentFlyerMiles = result
-
-    result :: Maybe R <- prompt "Litres of ice cream: "
-    when (isNothing result) (putStrLn "Quit" >> exitSuccess)
-    let Just litresIceCream = result
+    videoGameTime <- prompt "Time playing video games: "
+    frequentFlyerMiles <- prompt "Frequent flyer miles: "
+    litresIceCream <- prompt "Litres of ice cream: "
 
     path <- getDataFileName "datingTestSet.txt"
     Just m <- readLabelledMatrix path
@@ -76,19 +68,25 @@ classifyPerson = do
 
     putStrLn $ "Result: " ++ label
 
-readMaybe :: Read a => String -> Maybe a
-readMaybe s = case reads s of [(x, "")] -> Just x
-                              _ -> Nothing
-
-prompt :: Read a => String -> IO (Maybe a)
+prompt :: Read a => String -> IO a
 prompt s = do
     putStr s
     hFlush stdout
-    s <- getLine
-    return $ readMaybe s
+    readLn
+
+-- cf kNN.img2vector
+readImageVector :: FilePath -> IO ()
+readImageVector path = do
+    ls <- lines <$> readFile path
+    print ls
+
+blah :: IO ()
+blah = do
+    readImageVector "data/digits/trainingDigits/9_99.txt"
 
 main :: IO ()
 main = do
     --renderFigures
     classifyPerson
+    blah
     putStrLn "Done"
