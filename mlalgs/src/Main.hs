@@ -75,16 +75,16 @@ prompt s = do
     readLn
 
 -- cf kNN.img2vector
-readImageVector :: Int -> Int -> FilePath -> IO ()
+readImageVector :: Int -> Int -> FilePath -> IO [R]
 readImageVector rc cc path = do
     ls <- lines <$> readFile path
-    let l = head ls
-        r0 = vector $ concat (take rc $ map (\l -> take cc $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
-    print r0
+    let rs = concat (take rc $ map (\l -> take cc $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
+    return rs
 
 blah :: IO ()
 blah = do
-    readImageVector 32 32 "data/digits/trainingDigits/9_99.txt"
+    _ <- readImageVector 32 32 "data/digits/trainingDigits/9_99.txt"
+    putStrLn "Done"
 
 main :: IO ()
 main = do
