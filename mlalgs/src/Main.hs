@@ -85,6 +85,7 @@ readImageVector height width path = do
     let xs = concat (take height $ map (\l -> take width $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
     return xs
 
+-- cf kNN.handwritingClassTest
 blah :: IO ()
 blah = do
     let height = 32
@@ -92,14 +93,14 @@ blah = do
         columnCount = height * width
         dir = "data/digits/trainingDigits"
     paths <- listDirectory dir
-    values <- forFoldM [] paths $ \values' p -> do
-        let label = head (splitOneOf ['_'] p)
+    (values, labelIds) <- forFoldM ([], []) paths $ \(values', labelIds') p -> do
+        let labelId = read $ head (splitOneOf ['_'] p)
         xs <- readImageVector 32 32 (dir </> p)
-        return $ values' ++ xs
-    print "HMM"
-    let m = matrix columnCount values
-    print $ rows m
-    print $ cols m
+        return $ (values' ++ xs, labelIds' ++ labelId)
+    let trainingMatrix = matrix columnCount values
+        trainingLabelIds :: VU.Vector LabelId
+        trainingLabelIds = VU.fromList labelIds
+    print $ trainingLabelIds
 
 main :: IO ()
 main = do
