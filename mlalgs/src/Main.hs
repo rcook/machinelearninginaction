@@ -19,27 +19,31 @@ renderFigures :: IO ()
 renderFigures = do
     Just m <- readLabelledMatrix dataPath
 
+    -- Figure 2.3
+    renderSVG
+        "figure-2.3.svg"
+        defaultChartLabels { clTitle = Just "Figure 2.3", clYAxisLabel = Just "Ice cream", clXAxisLabel = Just "Video games" }
+        [simplePlot m 1 2]
+
     -- Figure 2.4
     renderSVG
         "figure-2.4.svg"
-        defaultChartLabels { clYAxisLabel = Just "Ice cream", clXAxisLabel = Just "Video games" }
-        (plots m 1 2)
+        defaultChartLabels { clTitle = Just "Figure 2.4", clYAxisLabel = Just "Ice cream", clXAxisLabel = Just "Video games" }
+        (colouredSeriesPlots m 1 2)
 
     -- Figure 2.5
     renderSVG
         "figure-2.5.svg"
-        defaultChartLabels { clYAxisLabel = Just "Video games", clXAxisLabel = Just "Frequent flyer miles" }
-        (plots m 0 1)
+        defaultChartLabels { clTitle = Just "Figure 2.5", clYAxisLabel = Just "Video games", clXAxisLabel = Just "Frequent flyer miles" }
+        (colouredSeriesPlots m 0 1)
 
     -- Normalized version of figure 2.5
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
         m' = m { lmValues = mnValues }
     renderSVG
         "figure-2.5-normalized.svg"
-        defaultChartLabels { clYAxisLabel = Just "Video games", clXAxisLabel =  Just "Frequent flyer miles" }
-        (plots m' 0 1)
-    print mnRanges
-    print mnMins
+        defaultChartLabels { clTitle = Just "Figure 2.5 (normalized)", clYAxisLabel = Just "Video games", clXAxisLabel =  Just "Frequent flyer miles" }
+        (colouredSeriesPlots m' 0 1)
 
 main :: IO ()
 main = do

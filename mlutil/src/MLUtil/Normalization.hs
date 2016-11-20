@@ -33,7 +33,7 @@ normalizeColumn m c =
         range
         xMin
 
--- normalizeMatrixColumns is our equivalent to kNN.autoNorm
+-- cf kNN.autoNorm
 normalizeMatrixColumns :: Matrix R -> MatrixNormalization
 normalizeMatrixColumns m =
     let (columns, ranges, mins) = foldr
