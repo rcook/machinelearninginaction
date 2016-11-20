@@ -1,8 +1,7 @@
 module MLUtil.Sorting
-  ( IndexVector
-  , argSort
-  )
-  where
+    ( IndexVector
+    , argSort
+    ) where
 
 import           Control.Monad
 import           Control.Monad.ST

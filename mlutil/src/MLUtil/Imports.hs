@@ -1,5 +1,5 @@
 module MLUtil.Imports
-  ( module Numeric.LinearAlgebra
-  ) where
+    ( module Numeric.LinearAlgebra
+    ) where
 
 import           Numeric.LinearAlgebra

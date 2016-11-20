@@ -1,7 +1,7 @@
 module SortingSpec
-  ( main
-  , spec
-  ) where
+    ( main
+    , spec
+    ) where
 
 import qualified Data.Vector.Unboxed as VU
 import           MLUtil

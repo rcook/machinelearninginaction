@@ -1,9 +1,9 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module Classify0Spec
-  ( main
-  , spec
-  ) where
+    ( main
+    , spec
+    ) where
 
 import           DataFiles
 import qualified Data.Vector.Unboxed as VU
@@ -14,19 +14,19 @@ import           Test.Hspec
 
 dataSet :: Matrix R
 dataSet = matrix 2
-  [ 1.0, 1.1
-  , 1.0, 1.0
-  , 0.0, 0.0
-  , 0.0, 0.1
-  ]
+    [ 1.0, 1.1
+    , 1.0, 1.0
+    , 0.0, 0.0
+    , 0.0, 0.1
+    ]
 
 labelIds :: VU.Vector LabelId
 labelIds = VU.fromList
-  [ 1
-  , 1
-  , 2
-  , 2
-  ]
+    [ 1
+    , 1
+    , 2
+    , 2
+    ]
 
 labels :: M.Map LabelId String
 labels = M.fromList [(1, "A"), (2, "B")]

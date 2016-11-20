@@ -1,7 +1,7 @@
 module FoldingSpec
-  ( main
-  , spec
-  ) where
+    ( main
+    , spec
+    ) where
 
 import           Control.Exception
 import           MLUtil

@@ -1,7 +1,7 @@
 module MLUtil.Arithmetic
-  ( sumColumns
-  , sumRows
-  ) where
+    ( sumColumns
+    , sumRows
+    ) where
 
 import           MLUtil.Imports
 

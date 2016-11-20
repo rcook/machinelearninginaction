@@ -1,27 +1,27 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module MLUtil.Normalization
-  ( ColumnNormalization (..)
-  , MatrixNormalization (..)
-  , normalizeColumn
-  , normalizeMatrixColumns
-  ) where
+    ( ColumnNormalization (..)
+    , MatrixNormalization (..)
+    , normalizeColumn
+    , normalizeMatrixColumns
+    ) where
 
 import qualified Data.Vector.Storable as VS
 import           MLUtil.Folding
 import           MLUtil.Imports
 
 data ColumnNormalization = ColumnNormalization
-  { cnValues :: Vector R
-  , cnRange :: R
-  , cnMin :: R
-  } deriving (Eq, Show)
+    { cnValues :: Vector R
+    , cnRange :: R
+    , cnMin :: R
+    } deriving (Eq, Show)
 
 data MatrixNormalization = MatrixNormalization
-  { mnValues :: Matrix R
-  , mnRanges :: [R]
-  , mnMins :: [R]
-  } deriving Show
+    { mnValues :: Matrix R
+    , mnRanges :: [R]
+    , mnMins :: [R]
+    } deriving Show
 
 normalizeColumn :: Matrix R -> Int -> ColumnNormalization
 normalizeColumn m c =

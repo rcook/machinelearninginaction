@@ -1,10 +1,10 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module MLUtil.Charting
-  ( ChartLabels (..)
-  , defaultChartLabels
-  , renderSVG
-  ) where
+    ( ChartLabels (..)
+    , defaultChartLabels
+    , renderSVG
+    ) where
 
 import           Graphics.Rendering.Chart.Backend.Diagrams
 import           Graphics.Rendering.Chart.Easy

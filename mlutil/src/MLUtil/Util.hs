@@ -1,7 +1,7 @@
 module MLUtil.Util
-  ( forFold
-  , forFoldM
-  ) where
+    ( forFold
+    , forFoldM
+    ) where
 
 import           Control.Monad
 

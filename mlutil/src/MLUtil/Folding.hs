@@ -1,7 +1,7 @@
 module MLUtil.Folding
-  ( columnHead
-  , foldColumn
-  ) where
+    ( columnHead
+    , foldColumn
+    ) where
 
 import           MLUtil.Imports
 

@@ -1,7 +1,7 @@
 module RoundableSpec
-  ( main
-  , spec
-  ) where
+    ( main
+    , spec
+    ) where
 
 import           MLUtil
 import           Test.Hspec

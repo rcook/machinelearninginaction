@@ -1,9 +1,9 @@
 {-# LANGUAGE RecordWildCards #-}
 
 module NormalizationSpec
-  ( main
-  , spec
-  ) where
+    ( main
+    , spec
+    ) where
 
 import           Expectations
 import           MLUtil

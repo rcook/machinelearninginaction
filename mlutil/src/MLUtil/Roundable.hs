@@ -1,8 +1,8 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 
 module MLUtil.Roundable
-  ( Roundable (..)
-  ) where
+    ( Roundable (..)
+    ) where
 
 import qualified Data.Vector.Storable as VS
 import           MLUtil.Imports

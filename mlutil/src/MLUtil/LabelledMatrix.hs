@@ -1,9 +1,9 @@
 module MLUtil.LabelledMatrix
-  ( LabelId
-  , LabelledMatrix (..)
-  , mkLabelledMatrix
-  , readLabelledMatrix
-  ) where
+    ( LabelId
+    , LabelledMatrix (..)
+    , mkLabelledMatrix
+    , readLabelledMatrix
+    ) where
 
 import           Control.Exception
 import           Control.Monad
@@ -21,11 +21,11 @@ import           Numeric.LinearAlgebra.Devel
 type LabelId = Int
 
 data LabelledMatrix = LabelledMatrix
-  { lmValues :: Matrix R
-  , lmLabelIds :: VU.Vector LabelId
-  , lmLabelIdMap :: M.Map String LabelId
-  , lmLabelMap :: M.Map LabelId String
-  } deriving Show
+    { lmValues :: Matrix R
+    , lmLabelIds :: VU.Vector LabelId
+    , lmLabelIdMap :: M.Map String LabelId
+    , lmLabelMap :: M.Map LabelId String
+    } deriving Show
 
 splitLine :: String -> [String]
 splitLine = splitOneOf [' ', '\t']
