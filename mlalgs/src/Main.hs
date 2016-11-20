@@ -75,18 +75,20 @@ prompt s = do
     readLn
 
 -- cf kNN.img2vector
-readImageVector :: FilePath -> IO ()
-readImageVector path = do
+readImageVector :: Int -> Int -> FilePath -> IO ()
+readImageVector rc cc path = do
     ls <- lines <$> readFile path
-    print ls
+    let l = head ls
+        r0 = vector $ concat (take rc $ map (\l -> take cc $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
+    print r0
 
 blah :: IO ()
 blah = do
-    readImageVector "data/digits/trainingDigits/9_99.txt"
+    readImageVector 32 32 "data/digits/trainingDigits/9_99.txt"
 
 main :: IO ()
 main = do
     --renderFigures
-    classifyPerson
+    --classifyPerson
     blah
     putStrLn "Done"
