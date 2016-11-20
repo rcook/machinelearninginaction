@@ -5,6 +5,7 @@ module Main (main) where
 
 import           Control.Monad
 import qualified Data.List as L
+import           Data.List.Split
 import qualified Data.Map as M
 import           Data.Maybe
 import qualified Data.Vector as V
@@ -13,8 +14,11 @@ import qualified Data.Vector.Storable as VS
 import           DataFiles
 import           MLAlgs.Classify0
 import           MLUtil
+import           System.Directory
 import           System.Exit
+import           System.FilePath
 import           System.IO
+import           System.IO.Strict as IOS
 import           Text.Printf
 
 dataPath :: FilePath
@@ -76,15 +80,26 @@ prompt s = do
 
 -- cf kNN.img2vector
 readImageVector :: Int -> Int -> FilePath -> IO [R]
-readImageVector rc cc path = do
-    ls <- lines <$> readFile path
-    let rs = concat (take rc $ map (\l -> take cc $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
-    return rs
+readImageVector height width path = do
+    ls <- lines <$> IOS.readFile path
+    let xs = concat (take height $ map (\l -> take width $ map (\c -> if c == '0' then 0.0 else 1.0) l) ls)
+    return xs
 
 blah :: IO ()
 blah = do
-    _ <- readImageVector 32 32 "data/digits/trainingDigits/9_99.txt"
-    putStrLn "Done"
+    let height = 32
+        width = 32
+        columnCount = height * width
+        dir = "data/digits/trainingDigits"
+    paths <- listDirectory dir
+    values <- forFoldM [] paths $ \values' p -> do
+        let label = head (splitOneOf ['_'] p)
+        xs <- readImageVector 32 32 (dir </> p)
+        return $ values' ++ xs
+    print "HMM"
+    let m = matrix columnCount values
+    print $ rows m
+    print $ cols m
 
 main :: IO ()
 main = do

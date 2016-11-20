@@ -32,9 +32,13 @@ executable mlalgs-app
                             , Paths_mlalgs
   build-depends:              base
                             , containers
+                            , directory
+                            , filepath
                             , hmatrix
                             , mlalgs
                             , mlutil
+                            , split
+                            , strict
                             , vector
 
 test-suite spec
