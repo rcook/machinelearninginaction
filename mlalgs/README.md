@@ -1,3 +1,7 @@
+# `mlalgs`
+
+Examples of basic machine learning algorithms
+
 # Install prerequisites
 
 ## Windows
