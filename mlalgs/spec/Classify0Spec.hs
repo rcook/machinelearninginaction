@@ -47,7 +47,7 @@ errorRate m testRatio =
         trainingLabelIds = VU.slice testRowCount (rowCount - testRowCount) (lmLabelIds m)
         (passCount, errorCount) = forFold (0, 0) [0..testRowCount - 1] $ \r (passCount', errorCount') ->
             let testVector = subMatrix (r, 0) (1, columnCount) testMatrix
-                actualLabelId = classify0 testVector trainingMatrix trainingLabelIds 3
+                actualLabelId = classify0 testVector trainingMatrix trainingLabelIds k
                 expectedLabelId = (VU.!) (lmLabelIds m) r
             in if actualLabelId == expectedLabelId
                 then (passCount' + 1, errorCount')

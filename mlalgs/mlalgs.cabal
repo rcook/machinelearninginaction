@@ -12,7 +12,8 @@ category:                     Web
 build-type:                   Simple
 cabal-version:                >=1.10
 data-dir:                     data
-data-files:                   datingTestSet2.txt
+data-files:                   datingTestSet.txt
+                            , datingTestSet2.txt
 
 library
   hs-source-dirs:             lib
@@ -27,6 +28,8 @@ executable mlalgs-app
   hs-source-dirs:             src
   main-is:                    Main.hs
   default-language:           Haskell2010
+  other-modules:              DataFiles
+                            , Paths_mlalgs
   build-depends:              base
                             , containers
                             , hmatrix
