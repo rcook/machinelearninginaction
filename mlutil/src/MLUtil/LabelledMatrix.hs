@@ -36,9 +36,11 @@ swapPair (a, b) = (b, a)
 swapMap :: (Ord k, Ord v) => M.Map k v -> M.Map v k
 swapMap = M.fromList . map swapPair . M.toList
 
+-- cf kNN.file2matrix
 readLabelledMatrix :: FilePath -> IO (Maybe LabelledMatrix)
 readLabelledMatrix path = (mkLabelledMatrix . lines) <$> readFile path
 
+-- cf kNN.file2matrix
 mkLabelledMatrix :: [String] -> Maybe LabelledMatrix
 mkLabelledMatrix [] = Nothing
 mkLabelledMatrix ls =
