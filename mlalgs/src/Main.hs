@@ -20,15 +20,24 @@ renderFigures = do
     Just m <- readLabelledMatrix dataPath
 
     -- Figure 2.4
-    renderSVG "Ice cream vs. video games" "figure-2.4.svg" (plots m 1 2)
+    renderSVG
+        "figure-2.4.svg"
+        defaultChartLabels { clYAxisLabel = Just "Ice cream", clXAxisLabel = Just "Video games" }
+        (plots m 1 2)
 
     -- Figure 2.5
-    renderSVG "Video games vs. frequent flyer miles" "figure-2.5.svg" (plots m 0 1)
+    renderSVG
+        "figure-2.5.svg"
+        defaultChartLabels { clYAxisLabel = Just "Video games", clXAxisLabel = Just "Frequent flyer miles" }
+        (plots m 0 1)
 
     -- Normalized version of figure 2.5
     let MatrixNormalization{..} = normalizeMatrixColumns (lmValues m)
         m' = m { lmValues = mnValues }
-    renderSVG "Normalized: video games vs. frequent flyer miles" "figure-2.5-normalized.svg" (plots m' 0 1)
+    renderSVG
+        "figure-2.5-normalized.svg"
+        defaultChartLabels { clYAxisLabel = Just "Video games", clXAxisLabel =  Just "Frequent flyer miles" }
+        (plots m' 0 1)
     print mnRanges
     print mnMins
 
