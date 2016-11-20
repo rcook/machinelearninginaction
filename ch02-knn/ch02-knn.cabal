@@ -1,6 +1,6 @@
-name:                         mlalgs
+name:                         ch02-knn
 version:                      0.1.0.0
-synopsis:                     Basic machine learning algorithms
+synopsis:                     Machine Learning in Action: k-nearest neighbours
 description:                  Please see README.md
 homepage:                     https://github.com/rcook/mlalgs#readme
 license:                      MIT
@@ -18,24 +18,24 @@ data-files:                   datingTestSet.txt
 library
   hs-source-dirs:             lib
   default-language:           Haskell2010
-  exposed-modules:            MLAlgs.Classify0
+  exposed-modules:            Ch02KNN.Classify0
   build-depends:              base
                             , containers
                             , mlutil
                             , vector
 
-executable mlalgs-app
+executable ch02-knn-app
   hs-source-dirs:             src
   main-is:                    Main.hs
   default-language:           Haskell2010
   other-modules:              DataFiles
-                            , Paths_mlalgs
+                            , Paths_ch02_knn
   build-depends:              base
+                            , ch02-knn
                             , containers
                             , directory
                             , filepath
                             , hmatrix
-                            , mlalgs
                             , mlutil
                             , split
                             , strict
@@ -48,10 +48,10 @@ test-suite spec
   main-is:                    Spec.hs
   other-modules:              Classify0Spec
                             , DataFiles
-                            , Paths_mlalgs
+                            , Paths_ch02_knn
   build-depends:              base
+                            , ch02-knn
                             , containers
                             , hspec
-                            , mlalgs
                             , mlutil
                             , vector

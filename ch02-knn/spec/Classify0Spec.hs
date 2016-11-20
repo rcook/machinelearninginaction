@@ -5,10 +5,10 @@ module Classify0Spec
     , spec
     ) where
 
+import           Ch02KNN.Classify0
 import           DataFiles
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Map as M
-import           MLAlgs.Classify0
 import           MLUtil
 import           Test.Hspec
 

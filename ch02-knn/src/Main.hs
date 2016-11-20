@@ -3,6 +3,7 @@
 
 module Main (main) where
 
+import           Ch02KNN.Classify0
 import           Control.Monad
 import qualified Data.List as L
 import           Data.List.Split
@@ -12,7 +13,6 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Unboxed as VU
 import qualified Data.Vector.Storable as VS
 import           DataFiles
-import           MLAlgs.Classify0
 import           MLUtil
 import           System.Directory
 import           System.Exit
