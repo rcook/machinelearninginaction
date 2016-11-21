@@ -1,6 +1,6 @@
-# `mlalgs`
+# `ch02-knn`
 
-Examples of basic machine learning algorithms
+Haskell versions of programs from chapter 2 of Machine Learning in Action
 
 # Install prerequisites
 
