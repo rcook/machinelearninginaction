@@ -2,7 +2,7 @@ name:                         ch02-knn
 version:                      0.1.0.0
 synopsis:                     Machine Learning in Action: k-nearest neighbours
 description:                  Please see README.md
-homepage:                     https://github.com/rcook/mlalgs#readme
+homepage:                     https://github.com/rcook/mlutil#readme
 license:                      MIT
 license-file:                 LICENSE
 author:                       Richard Cook
