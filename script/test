@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+SCRIPTDIR=$(cd $(dirname $0); pwd -P)
+REPODIR=$(dirname $SCRIPTDIR)
+cd $REPODIR
+ch02-knn/script/test
+mlutil/script/test
