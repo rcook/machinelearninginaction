@@ -32,6 +32,8 @@ library
                             , MLUtil.RRScatterPlot
                             , MLUtil.Roundable
                             , MLUtil.Sorting
+                            , MLUtil.Test
+                            , MLUtil.Test.Expectations
                             , MLUtil.Util
   build-depends:              Chart
                             , Chart-diagrams
@@ -39,6 +41,7 @@ library
                             , containers
                             , directory
                             , hmatrix
+                            , hspec
                             , process
                             , split
                             , temporary
@@ -51,7 +54,6 @@ test-suite spec
   default-language:           Haskell2010
   main-is:                    Spec.hs
   other-modules:              ArithmeticSpec
-                            , Expectations
                             , FoldingSpec
                             , LabelledMatrixSpec
                             , NormalizationSpec

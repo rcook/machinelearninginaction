@@ -1,6 +1,6 @@
 {-# LANGUAGE ImplicitParams #-}
 
-module Expectations (shouldRoundTo) where
+module MLUtil.Test.Expectations (shouldRoundTo) where
 
 import           GHC.Stack
 import           MLUtil

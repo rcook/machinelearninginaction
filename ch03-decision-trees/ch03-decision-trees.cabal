@@ -15,8 +15,9 @@ cabal-version:                >=1.10
 library
   hs-source-dirs:             lib
   default-language:           Haskell2010
-  exposed-modules:            Ch03DecisionTrees.Foo
+  exposed-modules:            Ch03DecisionTrees.Entropy
   build-depends:              base
+                            , containers
 
 executable ch03-decision-trees-app
   hs-source-dirs:             src
@@ -26,16 +27,16 @@ executable ch03-decision-trees-app
                             , Paths_ch03_decision_trees
   build-depends:              base
                             , ch03-decision-trees
-                            , containers
 
 test-suite spec
   type:                       exitcode-stdio-1.0
   hs-source-dirs:             spec
   default-language:           Haskell2010
   main-is:                    Spec.hs
-  other-modules:              FooSpec
+  other-modules:              EntropySpec
                             , DataFiles
                             , Paths_ch03_decision_trees
   build-depends:              base
                             , ch03-decision-trees
                             , hspec
+                            , mlutil

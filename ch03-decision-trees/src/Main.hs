@@ -1,30 +1,23 @@
-{-# LANGUAGE LambdaCase #-}
-
 module Main (main) where
 
-import           Ch03DecisionTrees.Foo
-import qualified Data.Map as M
+import           Ch03DecisionTrees.Entropy
 import           DataFiles
 
-type Record = (Int, Int, String)
+data Record = R Int Int String deriving Show
+instance Labelled Record where
+    label (R _ _ s) = s
 
 dataSet :: [Record]
 dataSet =
-    [ (1, 1, "yes")
-    , (1, 1, "yes")
-    , (1, 0, "no")
-    , (0, 1, "no")
-    , (0, 1, "no")
+    [ R 1 1 "yes"
+    , R 1 1 "yes"
+    , R 1 0 "no"
+    , R 0 1 "no"
+    , R 0 1 "no"
     ]
 
 labels :: [String]
 labels = ["no surfacing", "flippers"]
-
--- cf trees.calcShannonEnt
-calculateShannonEntropy :: [Record] -> M.Map String Int
-calculateShannonEntropy rs =
-    let count = length rs
-    in foldr (\(_, _, label) m -> M.alter (\case { Nothing -> Just 1; Just n -> Just $ n + 1 }) label m) M.empty rs
 
 main :: IO ()
 main = do

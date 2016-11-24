@@ -5,8 +5,8 @@ module NormalizationSpec
     , spec
     ) where
 
-import           Expectations
 import           MLUtil
+import           MLUtil.Test
 import           Test.Hspec
 
 m :: Matrix R
