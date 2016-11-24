@@ -1,21 +1,21 @@
 {-# LANGUAGE LambdaCase #-}
 
 module Ch03DecisionTrees.Entropy
-    ( Labelled (..)
+    ( Record
     , calculateShannonEntropy
+    , splitDataSet
     ) where
 
 import qualified Data.Map as M
 
-class Labelled a where
-    label :: a -> String
+type Record = ([Int], String)
 
 -- cf trees.calcShannonEnt
-calculateShannonEntropy :: Labelled a => [a] -> Double
+calculateShannonEntropy :: [Record] -> Double
 calculateShannonEntropy rs =
     let count = length rs
         labelCounts = foldr
-                        (\r m -> M.alter (\case { Nothing -> Just 1; Just n -> Just $ n + 1 }) (label r) m)
+                        (\(_, label) m -> M.alter (\case { Nothing -> Just 1; Just n -> Just $ n + 1 }) label m)
                         M.empty
                         rs
     in foldr
@@ -24,3 +24,12 @@ calculateShannonEntropy rs =
         labelCounts
     where probability n count = fromIntegral n / fromIntegral count
           log2 x = logBase 2 x
+
+-- cf trees.splitDataSet
+-- TODO: Use vector instead of list for O(N) indexing
+splitDataSet :: [Record] -> Int -> Int -> [Record]
+splitDataSet rs axis value =
+    map (\(xs, l) -> (deleteAt axis xs, l)) $ filter (\(xs, _) -> xs !! axis == value) rs
+    where deleteAt idx xs =
+            let (b, e) = splitAt idx xs
+            in b ++ drop 1 e

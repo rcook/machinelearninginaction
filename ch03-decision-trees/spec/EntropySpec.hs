@@ -9,22 +9,33 @@ import           Ch03DecisionTrees.Entropy
 import           MLUtil.Test
 import           Test.Hspec
 
-data Record = R Int Int String deriving Show
-instance Labelled Record where
-    label (R _ _ s) = s
+dataSet :: [Record]
+dataSet =
+    [ ([1, 1], "yes")
+    , ([1, 1], "yes")
+    , ([1, 0], "no")
+    , ([0, 1], "no")
+    , ([0, 1], "no")
+    ]
 
 spec :: Spec
 spec = do
     describe "calculateShannonEntropy" $ do
         it "should return correct value" $
-            let dataSet =
-                    [ R 1 1 "yes"
-                    , R 1 1 "yes"
-                    , R 1 0 "no"
-                    , R 0 1 "no"
-                    , R 0 1 "no"
-                    ]
-            in calculateShannonEntropy dataSet `shouldRoundTo` 0.97095
+            calculateShannonEntropy dataSet `shouldRoundTo` 0.97095
+
+    describe "splitDataSet" $ do
+        it "should split 0, 0" $
+            splitDataSet dataSet 0 0 `shouldBe` [([1], "no"), ([1], "no")]
+
+        it "should split 0, 1" $
+            splitDataSet dataSet 0 1 `shouldBe` [([1], "yes"), ([1], "yes"), ([0], "no")]
+
+        it "should split 1, 0" $
+            splitDataSet dataSet 1 0 `shouldBe` [([1], "no")]
+
+        it "should split 1, 1" $
+            splitDataSet dataSet 1 1 `shouldBe` [([1], "yes"), ([1], "yes"), ([0], "no"), ([0], "no")]
 
 main :: IO ()
 main = hspec spec
