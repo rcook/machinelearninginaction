@@ -26,6 +26,7 @@ executable ch03-decision-trees-app
                             , Paths_ch03_decision_trees
   build-depends:              base
                             , ch03-decision-trees
+                            , containers
 
 test-suite spec
   type:                       exitcode-stdio-1.0
