@@ -3,10 +3,12 @@
 module Ch03DecisionTrees.Entropy
     ( Record
     , calculateShannonEntropy
+    , chooseBestFeatureToSplit
     , splitDataSet
     ) where
 
 import qualified Data.Map as M
+import qualified Data.Set as S
 
 type Record = ([Int], String)
 
@@ -33,3 +35,24 @@ splitDataSet rs axis value =
     where deleteAt idx xs =
             let (b, e) = splitAt idx xs
             in b ++ drop 1 e
+
+-- cf trees.chooseBestFeatureToSplit
+-- TODO: Use vector instead of list for O(N) indexing
+chooseBestFeatureToSplit :: [Record] -> (Double, Int)
+chooseBestFeatureToSplit rs =
+    let (xs, _) = head rs
+        featureCount = length xs
+        baseEntropy = calculateShannonEntropy rs
+    in foldr
+        (\i p@(bestGain, bestIdx) ->
+            let s = S.fromList [let (xs, _) = example in xs !! i | example <- rs]
+                newEntropy = foldr (\a e ->
+                    let rs' = splitDataSet rs i a
+                        prob = fromIntegral (length rs') / fromIntegral (length rs)
+                    in e + prob * calculateShannonEntropy rs')
+                    0.0
+                    s
+                gain = baseEntropy - newEntropy
+            in if gain > bestGain then (gain, i) else (bestGain, bestIdx))
+        (0.0, -1)
+        [0..featureCount - 1]

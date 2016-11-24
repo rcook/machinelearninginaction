@@ -19,6 +19,8 @@ labels = ["no surfacing", "flippers"]
 
 main :: IO ()
 main = do
-    let sp = splitDataSet dataSet 0 1
-    print sp
+    let e = calculateShannonEntropy dataSet
+        sp = splitDataSet dataSet 0 1
+        result = chooseBestFeatureToSplit dataSet
+    print result
     putStrLn "Done"

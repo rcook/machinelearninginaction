@@ -37,5 +37,11 @@ spec = do
         it "should split 1, 1" $
             splitDataSet dataSet 1 1 `shouldBe` [([1], "yes"), ([1], "yes"), ([0], "no"), ([0], "no")]
 
+    describe "chooseBestFeatureToSplit" $ do
+        it "calculate correctly" $ do
+            let (gain, idx) = chooseBestFeatureToSplit dataSet
+            gain `shouldRoundTo` 0.41997
+            idx `shouldBe` 0
+
 main :: IO ()
 main = hspec spec
